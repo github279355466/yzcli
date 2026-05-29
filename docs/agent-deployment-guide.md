@@ -1,62 +1,190 @@
 # AI Agent 部署指南
 
-> 在客户服务器上部署 yzcli + yzcli-mcp + Skill，供 AI Agent 调用
+> 本指南覆盖两种部署模式：
+> - **模式 A（集中式网关）**：MCP Server 部署在 ERP 服务器，Agent 客户端通过 HTTP 连接 — **推荐**
+> - **模式 B（本地 stdio）**：MCP Server 在每台 Agent 客户端本地运行 — 传统方式
+
+## 架构概览
+
+### 模式 A：集中式 MCP 网关（推荐）
+
+```
+┌──────────────────────────────────────────────────┐
+│  AI Agent 客户端 (Claude Code / Codex)             │
+│  ├── SKILL.md (操作指引)                           │
+│  ├── MCP Client → HTTP ──────────────────────┐    │
+│  └── ~/.yzcli/config.yaml (Token)            │    │
+└──────────────────────────────────────────────┼────┘
+                                               │ HTTP (StreamableHTTP)
+┌──────────────────────────────────────────────▼────┐
+│  ERP 服务器：集中式 MCP 网关                          │
+│  ├── yzcli-mcp --http --port 3000                  │
+│  │   └── Tools 层 → yzcli-sdk → ERP API (本机<1ms) │
+│  └── yzcli-cli (管理员调试用)                        │
+└────────────────────────────────────────────────────┘
+```
+
+**优势**：
+- 客户端零安装（无需 Python、无需 Node.js）
+- Token 通过 HTTP Header 传递，MCP 网关统一管理 ERP 连接
+- 仅 ERP 服务器需部署和维护
+
+### 模式 B：本地 stdio（传统）
+
+```
+Agent 客户端
+  ├── yzcli-mcp (Node.js，stdio JSON-RPC)
+  │   └── yzcli-sdk → HTTP → ERP API
+  └── ~/.yzcli/config.yaml (Token + ERP URL)
+```
 
 ## 环境要求
 
-| 组件 | 版本要求 | 说明 |
-|------|---------|------|
-| Python | >= 3.8 | yzcli CLI 运行环境 |
-| Node.js | >= 18.0.0 | yzcli-mcp 运行环境 |
-| yzcli | 最新版本 | ERP CLI 工具 |
-| AI Agent 平台 | Claude Code / Codex / OpenClaw | 用户交互界面 |
+### 模式 A（集中式网关）
 
-## 部署步骤
+| 组件 | 位置 | 版本要求 | 说明 |
+|------|------|---------|------|
+| Node.js | ERP 服务器 | >= 18.0.0 | yzcli-mcp 运行环境 |
+| yzcli-mcp | ERP 服务器 | >= 0.2.0 | SDK-based MCP Server |
+| AI Agent | 客户端 | Claude Code / Codex | 仅需 HTTP 连接 |
 
-### Step 1: 安装 yzcli
+### 模式 B（本地 stdio）
+
+| 组件 | 位置 | 版本要求 | 说明 |
+|------|------|---------|------|
+| Node.js | 客户端 | >= 18.0.0 | yzcli-mcp 运行环境 |
+| yzcli-mcp | 客户端 | >= 0.2.0 | SDK-based MCP Server |
+| AI Agent | 客户端 | Claude Code / Codex | stdio 通信 |
+
+> **注意**：新版本 yzcli-mcp v0.2.0 使用 TypeScript SDK 直接调用 ERP API，不再依赖 Python CLI。
+
+---
+
+## 模式 A 部署：集中式 MCP 网关
+
+### Step 1：在 ERP 服务器安装 yzcli-mcp
 
 ```bash
-# 方式一：从源码安装（推荐，便于开发维护）
-cd yzcli
-pip install -e .
+cd yzcli/packages/yzcli-mcp
+npm install
+npm run build
+```
 
-# 方式二：从 PyPI 安装（正式发布后）
-pip install yzcli
+### Step 2：配置 ERP 连接
+
+```bash
+# 在 ERP 服务器上创建配置
+mkdir -p ~/.yzcli
+cat > ~/.yzcli/config.yaml << 'EOF'
+erp:
+  base_url: "http://localhost:8103"    # ERP API 地址（本机用 localhost）
+  user_token: "your-erp-token"
+  timeout: 30
+EOF
+```
+
+### Step 3：启动 MCP 网关
+
+```bash
+# 前台运行（调试用）
+node packages/yzcli-mcp/dist/index.js --http --port 3000
+
+# 生产环境用 PM2 或 systemd
+pm2 start "node /opt/yzcli/packages/yzcli-mcp/dist/index.js --http --port 3000" --name yzcli-mcp
 ```
 
 验证：
 ```bash
-yzcli --help
-yzcli config show
+# 检查服务是否启动
+curl -s http://localhost:3000/mcp -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"0.1"}}}'
 ```
 
-### Step 2: 配置 yzcli
+### Step 4：Agent 客户端配置
 
-```bash
-# 设置 ERP 连接信息
-yzcli config set erp.url "http://your-erp-server/api"
-yzcli config set erp.token "your-auth-token"
+#### Claude Code
 
-# 验证连接
-yzcli config show
+在项目根目录创建 `.claude/settings.json`：
+```json
+{
+  "mcpServers": {
+    "yzcli": {
+      "url": "http://erp-server:3000/mcp"
+    }
+  }
+}
 ```
 
-### Step 3: 安装 yzcli-mcp
+#### Codex
+
+创建 `~/.codex/.mcp.json`：
+```json
+{
+  "yzcli": {
+    "url": "http://erp-server:3000/mcp"
+  }
+}
+```
+
+### Step 5：Token 传递
+
+Agent 在 MCP 请求中携带 ERP Token（通过 HTTP Authorization Header）。MCP 网关从 Header 提取 Token，用于调用 ERP API。
+
+**Token 配置方式**（按优先级）：
+1. Agent 客户端的 `~/.yzcli/config.yaml` 中的 `erp.user_token`
+2. 环境变量 `ERP_TOKEN`
+
+---
+
+## 模式 B 部署：本地 stdio（传统）
+
+### Step 1：安装 yzcli-mcp
 
 ```bash
-# 方式一：全局安装（推荐）
+cd yzcli/packages/yzcli-mcp
+npm install && npm run build
+# 或全局安装
 npm install -g yzcli-mcp
-
-# 方式二：npx 免安装运行
-npx yzcli-mcp
 ```
 
-验证：
+### Step 2：配置 ERP 连接
+
 ```bash
-yzcli-mcp --help
+mkdir -p ~/.yzcli
+cat > ~/.yzcli/config.yaml << 'EOF'
+erp:
+  base_url: "http://your-erp-server:8103"
+  user_token: "your-erp-token"
+  timeout: 30
+EOF
 ```
 
-### Step 4: 安装 Skill
+### Step 3：配置 MCP Server
+
+#### Claude Code — `.claude/settings.json`
+
+```json
+{
+  "mcpServers": {
+    "yzcli": {
+      "command": "yzcli-mcp"
+    }
+  }
+}
+```
+
+#### Codex — `~/.codex/.mcp.json`
+
+```json
+{
+  "yzcli": {
+    "command": "yzcli-mcp"
+  }
+}
+```
+
+### Step 4：安装 Skill
 
 #### Claude Code 用户
 
@@ -69,184 +197,29 @@ cp yzcli-agent-skill/SKILL.md ~/.claude/skills/yzcli-erp/
 
 # 复制 references/ 目录（完整 TypeKey 索引、字段映射等）
 cp -r yzcli-agent-skill/references/ ~/.claude/skills/yzcli-erp/references/
-
-# 或使用 zip 分发包一步完成
-unzip yzcli-agent-skill-v1.0.zip -d ~/.claude/skills/yzcli-erp/
 ```
 
-> **SKILL.md 内嵌 Top 15 高频 TypeKey 的完整操作速查**（含字段编号+英文节点名双格式），
-> 覆盖销售订单、采购单、客户、商品等最常用业务。完整 110 个 TypeKey 在 references/typekey-full-list.md 中，Agent 按需读取。
-
-#### OpenClaw 用户
-
-参见 `yzcli-agent-skill/platforms/openclaw/skill-import.md`
-
-### Step 5: 配置 MCP Server
-
-#### Claude Code
-
-在项目根目录创建 `.claude/settings.json`：
-```json
-{
-  "mcpServers": {
-    "yzcli": {
-      "command": "yzcli-mcp",
-      "env": {
-        "YZCLI_PYTHON": "python"
-      }
-    }
-  }
-}
-```
-
-如果 Python 不在 PATH 中：
-```json
-{
-  "mcpServers": {
-    "yzcli": {
-      "command": "yzcli-mcp",
-      "env": {
-        "YZCLI_PYTHON": "C:\\Python312\\python.exe"
-      }
-    }
-  }
-}
-```
-
-#### OpenClaw
-
-参见 OpenClaw 平台文档配置 MCP server。
-
-#### Codex（OpenAI）
-
-创建 `~/.codex/.mcp.json`：
-```json
-{
-  "yzcli": {
-    "command": "yzcli-mcp",
-    "env": {
-      "YZCLI_PYTHON": "python"
-    }
-  }
-}
-```
-
-> Codex 使用与 Claude Code 相同的 **stdio** 传输协议，yzcli-mcp 无需任何修改即可兼容。
-
-### 架构说明：配置链路
-
-MCP Server **本身不需要 ERP API 地址**。调用链路如下：
-
-```
-Claude Code
-  └─ yzcli-mcp（Node.js，stdio JSON-RPC）
-       └─ subprocess → yzcli CLI（Python）
-            └─ 读取 ~/.yzcli/config.yaml → ERP API
-```
-
-| 组件 | 配置位置 | 内容 |
-|------|---------|------|
-| MCP Server | `.claude/settings.json` | `command` + `YZCLI_PYTHON`（不需要 API 地址） |
-| yzcli CLI | `~/.yzcli/config.yaml` | `erp.url` + `erp.token`（ERP 连接信息） |
-
-**关键点**：yzcli 的配置文件路径是 `~/.yzcli/config.yaml`（用户 home 目录），无论 yzcli-mcp 的工作目录在哪里，yzcli 都能自动找到配置。
-
-### Cowork 环境配置注意事项
-
-在 cowork（多人协作的 Claude Code 环境）中部署时，需注意以下差异：
-
-#### 1. YZCLI_PYTHON 环境变量
-
-cowork 环境中，Claude Code 启动 MCP Server 时使用 `settings.json` 中定义的环境变量。`YZCLI_PYTHON` 必须指向 **cowork 服务器上实际安装了 yzcli 的 Python 解释器**：
-
-```json
-{
-  "mcpServers": {
-    "yzcli": {
-      "command": "yzcli-mcp",
-      "env": {
-        "YZCLI_PYTHON": "/usr/bin/python3"
-      }
-    }
-  }
-}
-```
-
-> ⚠️ **常见错误**：cowork 服务器上的 Python 路径可能与本地不同。
-> 用 `which python3` 确认实际路径。
-
-#### 2. yzcli 安装位置
-
-cowork 环境中 yzcli 必须安装为**系统级**或**该用户级**，不能只装在某人的 home 目录下：
+#### Codex 用户
 
 ```bash
-# 确认 yzcli 可全局访问
-which yzcli
-yzcli --help
+mkdir -p ~/.codex/skills/yzcli-erp/
+cp yzcli-agent-skill/SKILL.md ~/.codex/skills/yzcli-erp/
+cp -r yzcli-agent-skill/references/ ~/.codex/skills/yzcli-erp/references/
 ```
 
-#### 3. ERP 配置文件权限
+### Step 5（可选）：复制 docs/ 参考文档
 
-`~/.yzcli/config.yaml` 包含 ERP Token（敏感信息）。cowork 环境中需确保：
-- 配置文件权限为 `600`（仅所有者可读写）
-- Token 不要提交到版本控制
-- 多用户共享同一服务器时，每个用户需要独立的 `~/.yzcli/config.yaml`
-
+如果希望 Agent 通过本地文件读取替代 MCP 调用以加速：
 ```bash
-# 设置配置文件权限
-chmod 600 ~/.yzcli/config.yaml
-```
-
-#### 4. npm 全局安装路径
-
-cowork 服务器上 `npm install -g yzcli-mcp` 后，需确认 `yzcli-mcp` 在 PATH 中：
-
-```bash
-# 确认 yzcli-mcp 可全局访问
-which yzcli-mcp
-yzcli-mcp --help
-```
-
-如果不在 PATH 中，在 `settings.json` 中使用完整路径：
-```json
-{
-  "mcpServers": {
-    "yzcli": {
-      "command": "/usr/local/bin/yzcli-mcp",
-      "env": {
-        "YZCLI_PYTHON": "/usr/bin/python3"
-      }
-    }
-  }
-}
-```
-
-#### 5. 验证 cowork 部署
-
-```bash
-# 1. 确认 yzcli 可用
-yzcli config show
-
-# 2. 确认 yzcli-mcp 可用
-yzcli-mcp --help
-
-# 3. 确认 ERP 连接正常
-yzcli agent run '{"type_key":"customer","operation":"fastquery","input":{"page_no":1,"page_size":1}}' --pretty
-```
-
-### Step 6（可选）：复制 docs/ 参考文档
-
-如果希望 Agent 使用「模式 B（项目目录模式）」——通过本地文件读取替代 MCP 调用以加速——需要将 `docs/` 目录复制到 Agent 工作目录下：
-
-```bash
-# 在 Agent 工作的项目目录中
 mkdir -p docs/
 cp -r yzcli/docs/ServiceNameList.md docs/
 cp -r yzcli/docs/field-mapping/ docs/field-mapping/
 cp -r yzcli/docs/specs/ docs/specs/
 ```
 
-**不复制 docs/ 也能正常工作**：SKILL.md 已内嵌 Top 15 TypeKey 的操作速查，完整 110 个 TypeKey 在 references/typekey-full-list.md 中。复制 docs/ 只是减少 MCP 调用次数的加速手段。
+**不复制 docs/ 也能正常工作**：SKILL.md 已内嵌 Top 15 TypeKey 的操作速查，完整 110 个 TypeKey 在 references/typekey-full-list.md 中。
+
+---
 
 ## 验证部署
 
@@ -259,34 +232,7 @@ cp -r yzcli/docs/specs/ docs/specs/
 
 预期：返回包含 110 个 TypeKey 的 JSON 索引。
 
-### 冒烟测试 2：TypeKey 查找（无需 MCP）
-
-在 Claude Code 中输入：
-```
-报价单的 TypeKey 是什么？
-```
-
-预期：Agent 从 references/typekey-full-list.md 中找到 `quotation`，无需调用 MCP。
-
-### 冒烟测试 3：Top 15 TypeKey 快速操作
-
-在 Claude Code 中输入：
-```
-销售订单的主键字段是什么？
-```
-
-预期：Agent 从 SKILL.md 内嵌的操作速查中直接回答 `docNo (IBA001)`，无需调用 MCP。
-
-### 冒烟测试 4：字段查询
-
-在 Claude Code 中输入：
-```
-调用 yzcli_help 工具，查询 sales.order 的字段
-```
-
-预期：返回销售订单的所有字段编号和名称。
-
-### 冒烟测试 5：执行查询
+### 冒烟测试 2：执行查询
 
 在 Claude Code 中输入：
 ```
@@ -295,7 +241,7 @@ cp -r yzcli/docs/specs/ docs/specs/
 
 预期：Agent 自动调用 yzcli_run 执行查询，返回订单数据。
 
-### 冒烟测试 6：防幻觉验证
+### 冒烟测试 3：防幻觉验证
 
 在 Claude Code 中输入：
 ```
@@ -307,95 +253,80 @@ cp -r yzcli/docs/specs/ docs/specs/
 2. Agent 先查询 customer 获取鼎捷的编码
 3. Agent 询问缺失的必填信息（品号、数量、单价等）
 
+---
+
 ## 故障排查
 
 | 问题 | 可能原因 | 解决方案 |
 |------|---------|---------|
-| MCP 工具不可用 | settings.json 配置错误 | 检查 JSON 格式，重启 Claude Code |
-| Python 找不到 | PATH 未配置 | 设置 YZCLI_PYTHON 完整路径 |
-| ERP 连接失败 | Token 过期或 URL 错误 | `yzcli config set erp.token <new-token>` |
-| Skill 未加载 | SKILL.md 未复制 | 确认文件在 ~/.claude/skills/yzcli-erp/ 目录 |
-| references/ 找不到 | 未复制 references 目录 | 确认 ~/.claude/skills/yzcli-erp/references/ 存在 |
+| MCP 工具不可用 | settings.json 配置错误 | 检查 JSON 格式，重启 Agent |
+| HTTP 网关连接失败 | 端口未开放或服务未启动 | 检查 `curl http://erp-server:3000/mcp` |
+| ERP 连接失败 | Token 过期或 URL 错误 | 更新 `~/.yzcli/config.yaml` |
+| Skill 未加载 | SKILL.md 未复制 | 确认文件在 ~/.claude/skills/yzcli-erp/ |
 | Node.js 找不到 | 未安装 Node.js | 安装 Node.js >= 18.0.0 |
-| npm install 失败 | 网络问题 | 检查代理设置或使用离线包 |
-| Agent 用 curl 调 MCP | 误以为 MCP 是 HTTP API | MCP 使用 stdio 协议，通过 MCP 工具调用，不能用 curl |
-| `localhost:8080` 连接失败 | MCP 不监听任何端口 | MCP 通过 stdin/stdout 通信，不开放 HTTP 端口 |
-| `ParserError: @ 不能用于表达式` | PowerShell 将 `@` 解析为 Splatting 运算符 | 用单引号包裹：`--json '@file.json'`，或用反引号转义：`` --json `@file.json `` |
 
-### PowerShell `@filename` 语法兼容
+---
 
-yzcli CLI 支持 `@filename` 语法从文件读取 JSON，但 **PowerShell** 会将 `@` 解析为 Splatting 运算符。
+## 目录结构
 
-| Shell | 正确写法 | 错误写法 |
-|-------|---------|---------|
-| cmd | `yzcli create sales.order --json @new_order.json` | — |
-| bash/zsh | `yzcli create sales.order --json @new_order.json` | — |
-| **PowerShell** | `yzcli create sales.order --json '@new_order.json'` | `--json @new_order.json` ❌ |
-
-PowerShell 三种绕过方式：
-```powershell
-# 方式1：单引号包裹
-yzcli create sales.order --json '@new_order.json'
-
-# 方式2：反引号转义
-yzcli create sales.order --json `@new_order.json
-
-# 方式3：管道传入
-Get-Content new_order.json -Raw | yzcli create sales.order --json -
-```
-
-## 目录结构（部署后）
+### 模式 A（集中式网关）— ERP 服务器
 
 ```
-客户服务器/
-├── yzcli/                          # Python CLI（源码或 pip 安装）
-│   ├── src/yzcli/
-│   ├── docs/                       # 参考文档（可选复制到 Agent 工作目录）
-│   │   ├── ServiceNameList.md      # 110 个 TypeKey 索引
-│   │   ├── field-mapping/          # 110 个字段编号↔别名对照
-│   │   └── specs/                  # 110 个 CLI 操作规格
-│   ├── config.yaml                 # ERP 连接配置
-│   └── ...
-├── yzcli-mcp/                      # Node.js MCP Server（npm 全局安装）
-├── yzcli-agent-skill/              # Skill 包
-│   ├── SKILL.md                    # 核心知识文件（唯一入口）
-│   ├── references/                 # 扩展文档（按需读取）
-│   │   ├── typekey-full-list.md    # 完整 110 个 TypeKey 索引
-│   │   ├── field-mapping-matrix.md # 字段映射矩阵
-│   │   └── ...
-│   └── platforms/                  # 平台适配文档
+ERP 服务器/
+├── yzcli/                              # 源码仓库
+│   ├── packages/
+│   │   ├── yzcli-sdk/                  # 共享 SDK
+│   │   ├── yzcli-mcp/                  # MCP Server（SDK-based）
+│   │   └── yzcli-cli/                  # TypeScript CLI
+│   └── ~/.yzcli/config.yaml            # ERP 连接配置
+└── pm2 start yzcli-mcp --http          # HTTP 网关进程
+```
+
+### 模式 A — Agent 客户端
+
+```
+Agent 客户端/
 ├── ~/.claude/skills/yzcli-erp/
-│   ├── SKILL.md                    # Claude Code Skill（复制自 yzcli-agent-skill/SKILL.md）
-│   └── references/                 # 扩展文档（复制自 yzcli-agent-skill/references/）
-└── .claude/settings.json           # Claude Code MCP 配置
+│   ├── SKILL.md                        # 操作指引
+│   └── references/                     # 扩展文档
+└── .claude/settings.json               # MCP URL 配置
+    { "mcpServers": { "yzcli": { "url": "http://erp-server:3000/mcp" } } }
 ```
 
-> **关键点**：
-> - **SKILL.md 是唯一入口文件**，内嵌 Top 15 TypeKey 操作速查，覆盖最常用业务场景
-> - **references/ 目录按需读取**，包含完整 110 个 TypeKey 索引和字段映射
-> - **docs/ 目录是否复制取决于使用场景**：
->   - **自包含模式（默认）**：不需要复制 docs/，SKILL + references 已足够
->   - **项目目录模式（加速）**：将 docs/ 复制到 Agent 工作目录下，Agent 可通过本地文件读取替代 MCP 调用
+### 模式 B（本地 stdio）— Agent 客户端
+
+```
+Agent 客户端/
+├── yzcli/                              # 源码仓库
+│   └── packages/yzcli-mcp/             # MCP Server（本地）
+├── ~/.yzcli/config.yaml                # ERP 连接配置
+├── ~/.claude/skills/yzcli-erp/
+│   ├── SKILL.md
+│   └── references/
+└── .claude/settings.json               # MCP stdio 配置
+    { "mcpServers": { "yzcli": { "command": "yzcli-mcp" } } }
+```
+
+---
 
 ## 维护说明
 
-### 更新 yzcli
+### 更新 yzcli-mcp（集中式网关）
 ```bash
-cd yzcli && git pull && pip install -e .
+cd yzcli && git pull
+cd packages/yzcli-mcp && npm run build
+# 重启 MCP 网关
+pm2 restart yzcli-mcp
 ```
 
-### 更新 yzcli-mcp
+### 更新 yzcli-mcp（本地 stdio）
 ```bash
-npm update -g yzcli-mcp
+cd yzcli && git pull
+cd packages/yzcli-mcp && npm install && npm run build
 ```
 
 ### 更新 Skill
 ```bash
 cp yzcli-agent-skill/SKILL.md ~/.claude/skills/yzcli-erp/
 cp -r yzcli-agent-skill/references/ ~/.claude/skills/yzcli-erp/references/
-```
-
-### 重新生成 TypeKey 映射
-```bash
-yzcli agent generate-map
 ```

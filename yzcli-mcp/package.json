@@ -1,7 +1,8 @@
 {
   "name": "yzcli-mcp",
   "version": "0.1.0",
-  "description": "MCP Server for YZCLI ERP CLI - provides AI Agent tools for ERP operations",
+  "deprecated": "DEPRECATED: 使用 packages/yzcli-mcp (v0.2.0 SDK-based) 替代",
+  "description": "[DEPRECATED] MCP Server for YZCLI ERP CLI — 已迁移到 packages/yzcli-mcp/",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
