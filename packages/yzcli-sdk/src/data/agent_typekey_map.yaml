@@ -1,0 +1,2545 @@
+version: 1
+generated_from:
+- docs/field-mapping
+- docs/specs
+typekeys:
+- type_key: absence.request
+  title: 请假单
+  dll: GZSXC18
+  aliases:
+  - 请假单
+  - absence.request
+  - GZSXC18
+  - absence request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: &id001
+    - 查询
+    - 列表
+    - 搜索
+    get: &id002
+    - 读取
+    - 详情
+    - 查看
+    create: &id003
+    - 新增
+    - 创建
+    update: &id004
+    - 更新
+    - 修改
+    delete: &id005
+    - 删除
+    approve: &id006
+    - 审核
+    disapprove: &id007
+    - 撤审
+    - 取消审核
+- type_key: absence.return.notification
+  title: 销假单
+  dll: GZSXC19
+  aliases:
+  - 销假单
+  - absence.return.notification
+  - GZSXC19
+  - absence return notification
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: account
+  title: 会计科目
+  dll: KJSKC02
+  aliases:
+  - 会计科目
+  - account
+  - KJSKC02
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: account.setup
+  title: 开户账号
+  dll: PJMCC01
+  aliases:
+  - 开户账号
+  - account.setup
+  - PJMCC01
+  - account setup
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: accounting.voucher
+  title: 会计凭证
+  dll: KJSKC04
+  aliases:
+  - 会计凭证
+  - accounting.voucher
+  - KJSKC04
+  - accounting voucher
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: accounts.payable
+  title: 应付账款开账
+  dll: YSFFC01
+  aliases:
+  - 应付账款开账
+  - accounts.payable
+  - YSFFC01
+  - accounts payable
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: accounts.receivable
+  title: 应收账款开账
+  dll: YSFSC01
+  aliases:
+  - 应收账款开账
+  - accounts.receivable
+  - YSFSC01
+  - accounts receivable
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: approve.price
+  title: 核价单
+  dll: PURCC05
+  aliases:
+  - 核价单
+  - approve.price
+  - PURCC05
+  - approve price
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: bank.account
+  title: 开户账号
+  dll: TPAGC36
+  aliases:
+  - 开户账号
+  - bank.account
+  - TPAGC36
+  - bank account
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: bank.deposit.receipt
+  title: 银行存提单
+  dll: PJMCC02
+  aliases:
+  - 银行存提单
+  - bank.deposit.receipt
+  - PJMCC02
+  - bank deposit receipt
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: bom
+  title: 产品结构
+  dll: SGMBC01
+  aliases:
+  - 产品结构
+  - bom
+  - SGMBC01
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: borrow.doc
+  title: 借入单
+  dll: INVJC01
+  aliases:
+  - 借入单
+  - borrow.doc
+  - INVJC01
+  - borrow doc
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: borrow.return
+  title: 借入还出单
+  dll: INVJC02
+  aliases:
+  - 借入还出单
+  - borrow.return
+  - INVJC02
+  - borrow return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: business.trip.request
+  title: 出差申请单
+  dll: GZSXC21
+  aliases:
+  - 出差申请单
+  - business.trip.request
+  - GZSXC21
+  - business trip request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: cash.receipt.payment.voucher
+  title: 现金收付单
+  dll: PJMCC03
+  aliases:
+  - 现金收付单
+  - cash.receipt.payment.voucher
+  - PJMCC03
+  - cash receipt payment voucher
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: collection.doc
+  title: 收款单
+  dll: YSFSC03
+  aliases:
+  - 收款单
+  - collection.doc
+  - YSFSC03
+  - collection doc
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: commodity.combination
+  title: 商品组合关系
+  dll: TPAGC44
+  aliases:
+  - 商品组合关系
+  - commodity.combination
+  - TPAGC44
+  - commodity combination
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: currency
+  title: 币种汇率
+  dll: TPAGC06
+  aliases:
+  - 币种汇率
+  - currency
+  - TPAGC06
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: customer
+  title: 客户信息
+  dll: TPAGC13
+  aliases:
+  - 客户信息
+  - customer
+  - TPAGC13
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: customer.item
+  title: 客户品号
+  dll: TPAGC11
+  aliases:
+  - 客户品号
+  - customer.item
+  - TPAGC11
+  - customer item
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: department
+  title: 部门信息
+  dll: TPAGC02
+  aliases:
+  - 部门信息
+  - department
+  - TPAGC02
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: ecn
+  title: 产品结构变更单
+  dll: SGMBC03
+  aliases:
+  - 产品结构变更单
+  - ecn
+  - SGMBC03
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: employee
+  title: 人员信息
+  dll: TPAGC47
+  aliases:
+  - 人员信息
+  - employee
+  - TPAGC47
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: employee.cash.advance.request
+  title: 借款单
+  dll: OASXC15
+  aliases:
+  - 借款单
+  - employee.cash.advance.request
+  - OASXC15
+  - employee cash advance request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: entrust.settlement
+  title: 委托结算单
+  dll: COPSC07
+  aliases:
+  - 委托结算单
+  - entrust.settlement
+  - COPSC07
+  - entrust settlement
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: excess.consumption.material.equisition
+  title: 超耗领料单
+  dll: SGMZC19
+  aliases:
+  - 超耗领料单
+  - excess.consumption.material.equisition
+  - SGMZC19
+  - excess consumption material equisition
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: excess.material.requisition
+  title: 超领单
+  dll: SGMZC21
+  aliases:
+  - 超领单
+  - excess.material.requisition
+  - SGMZC21
+  - excess material requisition
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: exchange.rate
+  title: 每日汇率
+  dll: TPAGC18
+  aliases:
+  - 每日汇率
+  - exchange.rate
+  - TPAGC18
+  - exchange rate
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: hospitality.expense.reimbursement.request
+  title: 招待费报销单
+  dll: OASXC03
+  aliases:
+  - 招待费报销单
+  - hospitality.expense.reimbursement.request
+  - OASXC03
+  - hospitality expense reimbursement request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: inquiry
+  title: 询价单
+  dll: PURCC01
+  aliases:
+  - 询价单
+  - inquiry
+  - PURCC01
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: inventory.inspection
+  title: 库存检验单
+  dll: QMSCC07
+  aliases:
+  - 库存检验单
+  - inventory.inspection
+  - QMSCC07
+  - inventory inspection
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: inventory.sheet
+  title: 盘点单
+  dll: INVKC04
+  aliases:
+  - 盘点单
+  - inventory.sheet
+  - INVKC04
+  - inventory sheet
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: inventory.transaction
+  title: 调整单
+  dll: INVKC02
+  aliases:
+  - 调整单
+  - inventory.transaction
+  - INVKC02
+  - inventory transaction
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: item
+  title: 商品信息
+  dll: TPAGC10
+  aliases:
+  - 商品信息
+  - item
+  - TPAGC10
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: item.classification
+  title: 商品分类
+  dll: TPAGC08
+  aliases:
+  - 商品分类
+  - item.classification
+  - TPAGC08
+  - item classification
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: item.combination
+  title: 商品组合单
+  dll: INVKC07
+  aliases:
+  - 商品组合单
+  - item.combination
+  - INVKC07
+  - item combination
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: item.customer.price
+  title: 客户商品价格
+  dll: TPAGC14
+  aliases:
+  - 客户商品价格
+  - item.customer.price
+  - TPAGC14
+  - item customer price
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: item.disassembly
+  title: 商品拆解单
+  dll: INVKC08
+  aliases:
+  - 商品拆解单
+  - item.disassembly
+  - INVKC08
+  - item disassembly
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: item.lot
+  title: 批号信息
+  dll: TPAGC39
+  aliases:
+  - 批号信息
+  - item.lot
+  - TPAGC39
+  - item lot
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: item.supplier.price
+  title: 供应商商品价格
+  dll: TPAGC17
+  aliases:
+  - 供应商商品价格
+  - item.supplier.price
+  - TPAGC17
+  - item supplier price
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: item.unit
+  title: 品号换算单位
+  dll: TPAGC09
+  aliases:
+  - 品号换算单位
+  - item.unit
+  - TPAGC09
+  - item unit
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: lend.doc
+  title: 借出单
+  dll: INVSC01
+  aliases:
+  - 借出单
+  - lend.doc
+  - INVSC01
+  - lend doc
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: lend.return
+  title: 借出还入单
+  dll: INVSC02
+  aliases:
+  - 借出还入单
+  - lend.return
+  - INVSC02
+  - lend return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: op.stockin
+  title: 工艺入库单
+  dll: GYSYC04
+  aliases:
+  - 工艺入库单
+  - op.stockin
+  - GYSYC04
+  - op stockin
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: operation
+  title: 工艺信息
+  dll: TPAGC37
+  aliases:
+  - 工艺信息
+  - operation
+  - TPAGC37
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: other.payable.doc
+  title: 其他应付账款
+  dll: YSFFC02
+  aliases:
+  - 其他应付账款
+  - other.payable.doc
+  - YSFFC02
+  - other payable doc
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: other.receivable
+  title: 其他应收账款
+  dll: YSFSC02
+  aliases:
+  - 其他应收账款
+  - other.receivable
+  - YSFSC02
+  - other receivable
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: other.reimbursement.request
+  title: 其他报销单
+  dll: OASXC16
+  aliases:
+  - 其他报销单
+  - other.reimbursement.request
+  - OASXC16
+  - other reimbursement request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: other.stock.in
+  title: 其它入库单
+  dll: INVKC09
+  aliases:
+  - 其它入库单
+  - other.stock.in
+  - INVKC09
+  - other stock in
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: other.stock.out
+  title: 其它出库单
+  dll: INVKC10
+  aliases:
+  - 其它出库单
+  - other.stock.out
+  - INVKC10
+  - other stock out
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.delivery
+  title: 委外送料
+  dll: SGMZC04
+  aliases:
+  - 委外送料
+  - outsourcing.delivery
+  - SGMZC04
+  - outsourcing delivery
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.excess.consumption.delivery
+  title: 委外超耗送料单
+  dll: SGMZC20
+  aliases:
+  - 委外超耗送料单
+  - outsourcing.excess.consumption.delivery
+  - SGMZC20
+  - outsourcing excess consumption delivery
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.overdelivery
+  title: 委外超送单
+  dll: SGMZC22
+  aliases:
+  - 委外超送单
+  - outsourcing.overdelivery
+  - SGMZC22
+  - outsourcing overdelivery
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.purchase.arrival
+  title: 委外收料单
+  dll: QMSCC04
+  aliases:
+  - 委外收料单
+  - outsourcing.purchase.arrival
+  - QMSCC04
+  - outsourcing purchase arrival
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.purchase.arrival.inspection
+  title: 委外检验单
+  dll: QMSCC05
+  aliases:
+  - 委外检验单
+  - outsourcing.purchase.arrival.inspection
+  - QMSCC05
+  - outsourcing purchase arrival inspection
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.purchase.inspection.return
+  title: 委外验退退回单
+  dll: QMSCC06
+  aliases:
+  - 委外验退退回单
+  - outsourcing.purchase.inspection.return
+  - QMSCC06
+  - outsourcing purchase inspection return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.purchase.receipt
+  title: 委外进货单
+  dll: SGMZC08
+  aliases:
+  - 委外进货单
+  - outsourcing.purchase.receipt
+  - SGMZC08
+  - outsourcing purchase receipt
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.purchase.return
+  title: 委外退货单
+  dll: SGMZC09
+  aliases:
+  - 委外退货单
+  - outsourcing.purchase.return
+  - SGMZC09
+  - outsourcing purchase return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.return
+  title: 委外退料
+  dll: SGMZC06
+  aliases:
+  - 委外退料
+  - outsourcing.return
+  - SGMZC06
+  - outsourcing return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.wo
+  title: 委外单
+  dll: SGMZC02
+  aliases:
+  - 委外单
+  - outsourcing.wo
+  - SGMZC02
+  - outsourcing wo
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: outsourcing.wo.change
+  title: 委外变更单
+  dll: SGMZC17
+  aliases:
+  - 委外变更单
+  - outsourcing.wo.change
+  - SGMZC17
+  - outsourcing wo change
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: overtime.work.request
+  title: 加班申请单
+  dll: GZSXC20
+  aliases:
+  - 加班申请单
+  - overtime.work.request
+  - GZSXC20
+  - overtime work request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: payable.doc
+  title: 付款单
+  dll: YSFFC03
+  aliases:
+  - 付款单
+  - payable.doc
+  - YSFFC03
+  - payable doc
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: payment.invoice
+  title: 付款票据
+  dll: PJMFC01
+  aliases:
+  - 付款票据
+  - payment.invoice
+  - PJMFC01
+  - payment invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: picking.receipt
+  title: 领料单
+  dll: SGMZC03
+  aliases:
+  - 领料单
+  - picking.receipt
+  - SGMZC03
+  - picking receipt
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: picking.return
+  title: 退料单
+  dll: SGMZC05
+  aliases:
+  - 退料单
+  - picking.return
+  - SGMZC05
+  - picking return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: potential.customer
+  title: 潜在客户
+  dll: TPAGC15
+  aliases:
+  - 潜在客户
+  - potential.customer
+  - TPAGC15
+  - potential customer
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: prepayment.invoice
+  title: 预收发票
+  dll: YSFFC05
+  aliases:
+  - 预收发票
+  - prepayment.invoice
+  - YSFFC05
+  - prepayment invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: product.process
+  title: 工艺路线
+  dll: GYSYC01
+  aliases:
+  - 工艺路线
+  - product.process
+  - GYSYC01
+  - product process
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: production.plan
+  title: 生产计划
+  dll: SGMZC11
+  aliases:
+  - 生产计划
+  - production.plan
+  - SGMZC11
+  - production plan
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: proforma.invoice
+  title: 预开发票
+  dll: YSFSC06
+  aliases:
+  - 预开发票
+  - proforma.invoice
+  - YSFSC06
+  - proforma invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.arrival
+  title: 收料单
+  dll: QMSCC01
+  aliases:
+  - 收料单
+  - purchase.arrival
+  - QMSCC01
+  - purchase arrival
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.arrival.inspection
+  title: 进货检验单
+  dll: QMSCC02
+  aliases:
+  - 进货检验单
+  - purchase.arrival.inspection
+  - QMSCC02
+  - purchase arrival inspection
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.change
+  title: 采购变更单
+  dll: PURCC07
+  aliases:
+  - 采购变更单
+  - purchase.change
+  - PURCC07
+  - purchase change
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.draft
+  title: 采购底稿单
+  dll: PURCC03
+  aliases:
+  - 采购底稿单
+  - purchase.draft
+  - PURCC03
+  - purchase draft
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.inspection.return
+  title: 验退退回单
+  dll: QMSCC08
+  aliases:
+  - 验退退回单
+  - purchase.inspection.return
+  - QMSCC08
+  - purchase inspection return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.invoice
+  title: 采购发票
+  dll: YSFFC04
+  aliases:
+  - 采购发票
+  - purchase.invoice
+  - YSFFC04
+  - purchase invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.order
+  title: 采购单
+  dll: PURCC04
+  aliases:
+  - 采购单
+  - purchase.order
+  - PURCC04
+  - purchase order
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.receipt
+  title: 进货单
+  dll: PURJC06
+  aliases:
+  - 进货单
+  - purchase.receipt
+  - PURJC06
+  - purchase receipt
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.requisitions
+  title: 请购单
+  dll: PURCC02
+  aliases:
+  - 请购单
+  - purchase.requisitions
+  - PURCC02
+  - purchase requisitions
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: purchase.return
+  title: 退货单
+  dll: PURJC07
+  aliases:
+  - 退货单
+  - purchase.return
+  - PURJC07
+  - purchase return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: quotation
+  title: 报价单
+  dll: COPDC01
+  aliases:
+  - 报价单
+  - quotation
+  - COPDC01
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: receipt.invoice
+  title: 收款票据
+  dll: PJMSC01
+  aliases:
+  - 收款票据
+  - receipt.invoice
+  - PJMSC01
+  - receipt invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: red.entrust.settlement
+  title: 红字委托结算单
+  dll: COPSC10
+  aliases:
+  - 红字委托结算单
+  - red.entrust.settlement
+  - COPSC10
+  - red entrust settlement
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: red.purchase.invoice
+  title: 红字采购发票
+  dll: YSFFC06
+  aliases:
+  - 红字采购发票
+  - red.purchase.invoice
+  - YSFFC06
+  - red purchase invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: red.sales.invoice
+  title: 红字销售发票
+  dll: YSFSC07
+  aliases:
+  - 红字销售发票
+  - red.sales.invoice
+  - YSFSC07
+  - red sales invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: replace.item
+  title: 取替代料件
+  dll: SGMZC13
+  aliases:
+  - 取替代料件
+  - replace.item
+  - SGMZC13
+  - replace item
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: rework
+  title: 重工单
+  dll: SGMZC12
+  aliases:
+  - 重工单
+  - rework
+  - SGMZC12
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: sales.invoice
+  title: 销售发票
+  dll: YSFSC05
+  aliases:
+  - 销售发票
+  - sales.invoice
+  - YSFSC05
+  - sales invoice
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: sales.order
+  title: 订单
+  dll: COPDC02
+  aliases:
+  - 订单
+  - sales.order
+  - COPDC02
+  - sales order
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: sales.order.change
+  title: 订单变更单
+  dll: COPDC03
+  aliases:
+  - 订单变更单
+  - sales.order.change
+  - COPDC03
+  - sales order change
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: sales.order.contract
+  title: 订单合同
+  dll: COPDC04
+  aliases:
+  - 订单合同
+  - sales.order.contract
+  - COPDC04
+  - sales order contract
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: sales.return
+  title: 销退单
+  dll: COPSC04
+  aliases:
+  - 销退单
+  - sales.return
+  - COPSC04
+  - sales return
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: scrap.order
+  title: 报废单
+  dll: INVKC11
+  aliases:
+  - 报废单
+  - scrap.order
+  - INVKC11
+  - scrap order
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: shipping.order
+  title: 销货单
+  dll: COPSC03
+  aliases:
+  - 销货单
+  - shipping.order
+  - COPSC03
+  - shipping order
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: sub.product.stock.in
+  title: 副产品入库单
+  dll: SGMZC14
+  aliases:
+  - 副产品入库单
+  - sub.product.stock.in
+  - SGMZC14
+  - sub product stock in
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: supplier
+  title: 供应商信息
+  dll: TPAGC16
+  aliases:
+  - 供应商信息
+  - supplier
+  - TPAGC16
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: supplier.item
+  title: 供应商品号
+  dll: TPAGC12
+  aliases:
+  - 供应商品号
+  - supplier.item
+  - TPAGC12
+  - supplier item
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: traffic.expense.reimbursement.request
+  title: 交通费报销单
+  dll: OASXC01
+  aliases:
+  - 交通费报销单
+  - traffic.expense.reimbursement.request
+  - OASXC01
+  - traffic expense reimbursement request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: transfer
+  title: 调拨单
+  dll: INVKC03
+  aliases:
+  - 调拨单
+  - transfer
+  - INVKC03
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: transfer.doc
+  title: 移转单
+  dll: GYSYC03
+  aliases:
+  - 移转单
+  - transfer.doc
+  - GYSYC03
+  - transfer doc
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: travel.expense.reimbursement.request
+  title: 差旅费报销单
+  dll: OASXC02
+  aliases:
+  - 差旅费报销单
+  - travel.expense.reimbursement.request
+  - OASXC02
+  - travel expense reimbursement request
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: warehouse
+  title: 仓库信息
+  dll: TPAGC07
+  aliases:
+  - 仓库信息
+  - warehouse
+  - TPAGC07
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+- type_key: wo
+  title: 工单
+  dll: SGMZC01
+  aliases:
+  - 工单
+  - wo
+  - SGMZC01
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: wo.change
+  title: 工单变更单
+  dll: SGMZC16
+  aliases:
+  - 工单变更单
+  - wo.change
+  - SGMZC16
+  - wo change
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: wo.routing
+  title: 工单工艺
+  dll: GYSYC02
+  aliases:
+  - 工单工艺
+  - wo.routing
+  - GYSYC02
+  - wo routing
+  operations:
+  - query
+  - get
+  - update
+  - delete
+  operation_aliases:
+    query: *id001
+    get: *id002
+    update: *id004
+    delete: *id005
+- type_key: wo.stock.in
+  title: 生产入库单
+  dll: SGMZC07
+  aliases:
+  - 生产入库单
+  - wo.stock.in
+  - SGMZC07
+  - wo stock in
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: wo.stock.out
+  title: 生产退回单
+  dll: SGMZC10
+  aliases:
+  - 生产退回单
+  - wo.stock.out
+  - SGMZC10
+  - wo stock out
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: wo.stockin.inspection
+  title: 生产入库检验单
+  dll: QMSCC03
+  aliases:
+  - 生产入库检验单
+  - wo.stockin.inspection
+  - QMSCC03
+  - wo stockin inspection
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
+- type_key: work.report
+  title: 报工单
+  dll: GYSYC05
+  aliases:
+  - 报工单
+  - work.report
+  - GYSYC05
+  - work report
+  operations:
+  - query
+  - get
+  - create
+  - update
+  - delete
+  - approve
+  - disapprove
+  operation_aliases:
+    query: *id001
+    get: *id002
+    create: *id003
+    update: *id004
+    delete: *id005
+    approve: *id006
+    disapprove: *id007
