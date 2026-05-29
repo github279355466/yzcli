@@ -320,6 +320,29 @@ cp -r yzcli/docs/specs/ docs/specs/
 | npm install 失败 | 网络问题 | 检查代理设置或使用离线包 |
 | Agent 用 curl 调 MCP | 误以为 MCP 是 HTTP API | MCP 使用 stdio 协议，通过 MCP 工具调用，不能用 curl |
 | `localhost:8080` 连接失败 | MCP 不监听任何端口 | MCP 通过 stdin/stdout 通信，不开放 HTTP 端口 |
+| `ParserError: @ 不能用于表达式` | PowerShell 将 `@` 解析为 Splatting 运算符 | 用单引号包裹：`--json '@file.json'`，或用反引号转义：`` --json `@file.json `` |
+
+### PowerShell `@filename` 语法兼容
+
+yzcli CLI 支持 `@filename` 语法从文件读取 JSON，但 **PowerShell** 会将 `@` 解析为 Splatting 运算符。
+
+| Shell | 正确写法 | 错误写法 |
+|-------|---------|---------|
+| cmd | `yzcli create sales.order --json @new_order.json` | — |
+| bash/zsh | `yzcli create sales.order --json @new_order.json` | — |
+| **PowerShell** | `yzcli create sales.order --json '@new_order.json'` | `--json @new_order.json` ❌ |
+
+PowerShell 三种绕过方式：
+```powershell
+# 方式1：单引号包裹
+yzcli create sales.order --json '@new_order.json'
+
+# 方式2：反引号转义
+yzcli create sales.order --json `@new_order.json
+
+# 方式3：管道传入
+Get-Content new_order.json -Raw | yzcli create sales.order --json -
+```
 
 ## 目录结构（部署后）
 
