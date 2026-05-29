@@ -3,71 +3,67 @@
 ## 红线（Agent 必须遵守）
 
 1. **禁止直接执行 yzcli CLI 命令**：ERP 操作必须通过 MCP 工具（`yzcli_run` / `yzcli_help` / `yzcli_manifest` / `yzcli_validate`）。禁止执行 `yzcli query`、`yzcli create`、`python -m yzcli` 等命令。
-2. **禁止修改 yzcli 源码**：`src/yzcli/` 下的 `.py` 文件是核心代码，禁止直接修改。如需修改，必须经过人工审批。
-3. **禁止修改 yzcli-mcp 源码**：`yzcli-mcp/src/` 下的 `.ts` 文件禁止直接修改。
-4. **禁止修改 SKILL.md**：`yzcli-agent-skill/SKILL.md` 是部署文档，禁止 Agent 自行修改。
+2. **禁止修改 packages/ 下的源码**：`packages/yzcli-sdk/src/`、`packages/yzcli-mcp/src/`、`packages/yzcli-cli/src/` 是核心代码，禁止直接修改。如需修改，必须经过人工审批。
+3. **禁止修改 SKILL.md**：`yzcli-agent-skill/SKILL.md` 是部署文档，禁止 Agent 自行修改。
 
 ## 项目概览
 
-这是一个 Python CLI 项目，包名为 `yzcli`，入口命令为 `yzcli` / `python -m yzcli`。源码位于 `src/yzcli/`，配置示例为 `config.example.yaml`。
+TypeScript monorepo（npm workspaces），为 AI Agent 提供 ERP 操作能力。
+
+```
+packages/
+├── yzcli-sdk/     # 共享 SDK（ErpClient + 字段映射 + 配置）
+├── yzcli-mcp/     # MCP Server（stdio + HTTP 网关模式）
+└── yzcli-cli/     # TypeScript CLI（commander.js）
+src/yzcli/         # Python CLI（deprecated，保留过渡）
+```
 
 ## 常用命令
 
-- 安装开发包：`pip install -e .`
-- Lint：`ruff check .`
-- 导入冒烟：`python test_import.py`
-- CLI 帮助：`python -m yzcli --help`
-- 配置查看：`python -m yzcli config show`
-- 测试命令：`python -m pytest -v`
+```bash
+# 安装依赖
+npm install
 
-当前有 16 个测试用例（6 个测试文件，均在 `tests/` 下），`python -m pytest -v` 应全部通过。
+# 全量构建
+npm run build
+
+# 全量测试
+npm test
+
+# 单包操作
+cd packages/yzcli-sdk && npm run build
+cd packages/yzcli-mcp && npm test
+cd packages/yzcli-cli && npm test
+```
 
 ## AI Agent 接口
 
 > **唯一入口是 MCP 工具**，Agent 不应直接调用 yzcli CLI 命令。
 
-MCP 工具（通过 yzcli-mcp 调用，stdio 协议）：
-- `yzcli_run(request)`：执行 ERP 操作（fastquery / getMultiple / create / update / delete / approve / disapprove）
-- `yzcli_help(type_key)`：获取字段明细
-- `yzcli_manifest()`：获取业务索引
+MCP 工具（通过 yzcli-mcp 调用）：
+- `yzcli_run(request)`：执行 ERP 操作（query / get / create / update / delete / approve / disapprove）
+- `yzcli_help(type_key)`：获取 TypeKey 信息（别名、支持的操作）
+- `yzcli_manifest()`：获取业务索引（110 个 TypeKey）
 - `yzcli_validate(request)`：校验请求 JSON
 - `yzcli_skill_version()`：查询 Skill 版本
 
-yzcli CLI 命令仅供开发者使用（测试、调试、配置），Agent 不应直接执行。
+传输模式：
+- **stdio**（本地）：`{ "command": "yzcli-mcp" }`
+- **HTTP**（集中式网关）：`{ "url": "http://erp-server:3000/mcp" }`
 
-## MCP Server + Skill
-
-`yzcli-mcp/` 是 Node.js MCP Server，通过 stdio 协议为 AI Agent 提供 4 个 ERP 工具。`yzcli-agent-skill/` 是可安装的知识包，引导 Agent 正确使用工具。
-
-```bash
-# MCP Server（Node.js）
-cd yzcli-mcp && npm install && npm run build && npm test
-
-# Skill 包
-cp yzcli-agent-skill/SKILL.md ~/.claude/skills/yzcli-erp.md
-```
-
-MCP 工具：`yzcli_manifest` / `yzcli_help` / `yzcli_validate` / `yzcli_run`
 详细部署见 `docs/agent-deployment-guide.md`。
 
 ## 日志功能
 
-日志配置位于 `AppConfig.log`，可通过 `yzcli config get/set log.*` 管理：
+日志配置位于 `~/.yzcli/config.yaml`。
 
-- `log.enabled`：是否启用日志，默认 `true`
-- `log.level`：`DEBUG` / `INFO` / `WARNING` / `ERROR`，默认 `INFO`
-- `log.dir`：日志目录，空值使用 `~/.yzcli/logs/`
-- `log.max_days`：日志保留天数，默认 `7`
-- `log.console`：是否同时输出到控制台，默认 `false`
-
-默认日志文件为 `~/.yzcli/logs/yzcli_YYYYMMDD.log`。`--debug` 会在本次命令执行中把 logger 和 handler 切到 DEBUG。
+默认日志文件为 `~/.yzcli/logs/yzcli_YYYYMMDD.log`。
 
 ## 文档结构
 
-- `README.md`：面向使用者的安装、配置、命令和日志说明
-- `docs/易助OpenAPI使用说明/`：官方 OpenAPI 参考资料
+- `README.md`：面向使用者的安装、配置、命令说明
+- `docs/agent-deployment-guide.md`：AI Agent 部署指南（集中式网关 + 本地 stdio）
+- `docs/agent-cli-integration.md`：AI Agent CLI 集成协议文档
 - `docs/specs/`：各 TypeKey 的 CLI 操作规格
 - `docs/field-mapping/`：字段编号和节点名对照
-- `docs/agent-cli-integration.md`：AI Agent CLI 集成协议文档
-- `docs/agent-deployment-guide.md`：AI Agent 部署指南（MCP + Skill）
 - `docs/ServiceNameList.md`：ServiceName 清单

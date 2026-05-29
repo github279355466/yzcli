@@ -158,26 +158,33 @@ yzcli agent run @request.json --pretty --explain
 
 ### MCP Server + Skill（AI Agent 自动调用）
 
-通过 MCP 协议和可安装 Skill，AI Agent（Claude Code、OpenClaw 等）可以自动发现和调用 yzcli 工具：
+通过 MCP 协议和可安装 Skill，AI Agent（Claude Code、Codex 等）可以自动发现和调用 yzcli 工具。
+
+**新架构（推荐）**：MCP Server 使用 TypeScript SDK 直接调用 ERP API，不再依赖 Python CLI。
 
 ```bash
-# 安装 MCP Server
-npm install -g yzcli-mcp
+# 构建 MCP Server（SDK-based）
+cd packages/yzcli-mcp && npm install && npm run build
 
 # 安装 Skill（Claude Code）
-cp yzcli-agent-skill/SKILL.md ~/.claude/skills/yzcli-erp.md
+cp yzcli-agent-skill/SKILL.md ~/.claude/skills/yzcli-erp/SKILL.md
+cp -r yzcli-agent-skill/references/ ~/.claude/skills/yzcli-erp/references/
 ```
 
-配置 `.claude/settings.json`：
+**模式 A — 集中式 HTTP 网关（推荐）**：
+```bash
+# ERP 服务器启动 MCP 网关
+node packages/yzcli-mcp/dist/index.js --http --port 3000
+```
 ```json
-{
-  "mcpServers": {
-    "yzcli": {
-      "command": "yzcli-mcp",
-      "env": { "YZCLI_PYTHON": "python" }
-    }
-  }
-}
+// 客户端 .claude/settings.json
+{ "mcpServers": { "yzcli": { "url": "http://erp-server:3000/mcp" } } }
+```
+
+**模式 B — 本地 stdio**：
+```json
+// .claude/settings.json
+{ "mcpServers": { "yzcli": { "command": "yzcli-mcp" } } }
 ```
 
 然后在 Claude Code 中直接用自然语言操作 ERP：
@@ -223,36 +230,15 @@ cp yzcli-agent-skill/SKILL.md ~/.claude/skills/yzcli-erp.md
 
 ```
 yzcli/
-├── src/yzcli/                # Python CLI 源码
-│   ├── core/                 # 核心层
-│   │   ├── api_client.py     # OpenAPI 统一客户端
-│   │   ├── config.py         # 配置管理
-│   │   ├── field_mapper.py   # 字段映射器
-│   │   ├── logger.py         # 日志管理
-│   │   ├── output.py         # 输出格式化
-│   │   ├── agent_models.py   # Agent 请求模型与校验
-│   │   ├── agent_mapping.py  # Agent 业务映射与 manifest
-│   │   └── agent_runner.py   # Agent 字段转换与 API 分发
-│   ├── commands/             # 通用命令
-│   │   ├── agent.py          # AI Agent 命令组
-│   │   └── ...
-│   └── data/
-│       └── agent_typekey_map.yaml  # 110 个 TypeKey 映射
-├── yzcli-mcp/                # Node.js MCP Server
-│   ├── src/
-│   │   ├── index.ts          # MCP server 入口（stdio）
-│   │   ├── cli-executor.ts   # subprocess 封装
-│   │   └── tools/            # 4 个 MCP 工具
-│   └── package.json
-├── yzcli-agent-skill/        # AI Agent Skill 包
-│   ├── SKILL.md              # 核心知识文件
-│   ├── references/           # 深度参考文档
-│   └── platforms/            # 平台适配文档
-├── tests/                    # Python 单元测试
-├── docs/                     # 文档
-│   ├── agent-cli-integration.md
-│   ├── agent-deployment-guide.md
-│   └── ...
+├── packages/
+│   ├── yzcli-sdk/              # TypeScript SDK（共享库）
+│   ├── yzcli-mcp/              # MCP Server（stdio + HTTP 网关）
+│   └── yzcli-cli/              # TypeScript CLI（commander.js）
+├── src/yzcli/                  # Python CLI（deprecated）
+├── yzcli-agent-skill/          # AI Agent Skill 包
+├── tests/                      # Python 测试
+├── docs/                       # 文档
+├── package.json                # npm workspaces 根配置
 └── README.md
 ```
 
