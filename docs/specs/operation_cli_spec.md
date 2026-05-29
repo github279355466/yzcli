@@ -1,0 +1,272 @@
+# CLI 规格说明书：工艺信息
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `operation` |
+| **DLL** | `TPAGC37` |
+| **服务名称** | `工艺信息` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete` |
+| **业务类型** | 基础资料 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "operation" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "operation" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"CBA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "operation" \
+  --action "create" \
+  --data '{"CBA001":"",...}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `CBA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (TPACBA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `CBA001` | 序号 | `CBA001` | string | 主键 |
+| `CBA002` | 关帐年月 | `CBA002` | string |  |
+| `CBA003` | 结账年月 | `CBA003` | string |  |
+| `CBA004` | 成本计价方式 | `CBA004` | string |  |
+| `CBA005` | 赠品管理 | `CBA005` | string |  |
+| `CBA006` | 信用额度管理 | `CBA006` | string |  |
+| `CBA007` | 按销货单记录客户商品 | `CBA007` | string |  |
+| `CBA008` | 按进货单记录供应商商 | `CBA008` | string |  |
+| `CBA009` | 进货检验管理 | `CBA009` | string |  |
+| `CBA010` | 库存量不足管理 | `CBA010` | string |  |
+| `CBA011` | 报价单编码方式 | `CBA011` | string |  |
+| `CBA012` | 报价单前置符 | `CBA012` | string |  |
+| `CBA013` | 订单编码方式 | `CBA013` | string |  |
+| `CBA014` | 订单前置符 | `CBA014` | string |  |
+| `CBA015` | 销货单编码方式 | `CBA015` | string |  |
+| `CBA016` | 销货单前置符 | `CBA016` | string |  |
+| `CBA017` | 销退单编码方式 | `CBA017` | string |  |
+| `CBA018` | 销退单前置符 | `CBA018` | string |  |
+| `CBA019` | 询价单编码方式 | `CBA019` | string |  |
+| `CBA020` | 询价单前置符 | `CBA020` | string |  |
+| `CBA021` | 请购单编码方式 | `CBA021` | string |  |
+| `CBA022` | 请购单前置符 | `CBA022` | string |  |
+| `CBA023` | 采购单编码方式 | `CBA023` | string |  |
+| `CBA024` | 采购单前置符 | `CBA024` | string |  |
+| `CBA025` | 进货验收单编码方式 | `CBA025` | string |  |
+| `CBA026` | 进货验收单前置符 | `CBA026` | string |  |
+| `CBA027` | 退货单编码方式 | `CBA027` | string |  |
+| `CBA028` | 退货单前置符 | `CBA028` | string |  |
+| `CBA029` | 采购底稿编码方式 | `CBA029` | string |  |
+| `CBA030` | 采购底稿前置符 | `CBA030` | string |  |
+| `CBA031` | 商品借出单编码方式 | `CBA031` | string |  |
+| `CBA032` | 借出单前置符 | `CBA032` | string |  |
+| `CBA033` | 借出还入单编码方式 | `CBA033` | string |  |
+| `CBA034` | 借出还入单前置符 | `CBA034` | string |  |
+| `CBA035` | 商品借入单编码方式 | `CBA035` | string |  |
+| `CBA036` | 商品借入单前置符 | `CBA036` | string |  |
+| `CBA037` | 借入还出单编码方式 | `CBA037` | string |  |
+| `CBA038` | 借入还出单前置符 | `CBA038` | string |  |
+| `CBA039` | 收料单编码方式 | `CBA039` | string |  |
+| `CBA040` | 收料单前置符 | `CBA040` | string |  |
+| `CBA041` | 验退退出单编码方式 | `CBA041` | string |  |
+| `CBA042` | 验退退出单前置符 | `CBA042` | string |  |
+| `CBA043` | 调拨单编码方式 | `CBA043` | string |  |
+| `CBA044` | 调拨单前置符 | `CBA044` | string |  |
+| `CBA045` | 盘点单编码方式 | `CBA045` | string |  |
+| `CBA046` | 盘点单前置符 | `CBA046` | string |  |
+| `CBA047` | 调整单编码方式 | `CBA047` | string |  |
+| `CBA048` | 调整单前置符 | `CBA048` | string |  |
+| `CBA049` | 组合单编码方式 | `CBA049` | string |  |
+| `CBA050` | 组合单前置符 | `CBA050` | string |  |
+| `CBA051` | 拆解单编码方式 | `CBA051` | string |  |
+| `CBA052` | 拆解单前置符 | `CBA052` | string |  |
+| `CBA053` | 需由系统打印电子发票 | `CBA053` | string |  |
+| `CBA054` | 发票打印格式 | `CBA054` | string |  |
+| `CBA055` | 发票打印笔数 | `CBA055` | integer |  |
+| `CBA056` | 预留编码方式 | `CBA056` | string |  |
+| `CBA057` | 预留前置符 | `CBA057` | string |  |
+| `CBA058` | 预留编码方式 | `CBA058` | string |  |
+| `CBA059` | 预留前置符 | `CBA059` | string |  |
+| `CBA060` | 预留编码方式 | `CBA060` | string |  |
+| `CBA061` | 预留前置符 | `CBA061` | string |  |
+| `CBA062` | 预留编码方式 | `CBA062` | string |  |
+| `CBA063` | 预留前置符 | `CBA063` | string |  |
+| `CBA064` | 预留字段 | `CBA064` | string |  |
+| `CBA065` | 预留字段 | `CBA065` | string |  |
+| `CBA066` | 预留字段 | `CBA066` | string |  |
+| `CBA067` | 预留字段 | `CBA067` | string |  |
+| `CBA068` | 预留字段 | `CBA068` | string |  |
+| `CBA069` | 预留字段 | `CBA069` | integer |  |
+| `CBA070` | 预留字段 | `CBA070` | integer |  |
+| `CBA071` | 预留字段 | `CBA071` | string |  |
+| `CBA072` | 税率不一致管理(销项) | `CBA072` | string |  |
+| `CBA073` | (预)税率不一致(进项) | `CBA073` | string |  |
+| `CBA074` | 核价单编码方式 | `CBA074` | string |  |
+| `CBA075` | 核价单前置符 | `CBA075` | string |  |
+| `CBA076` | 入库单编码方式 | `CBA076` | string |  |
+| `CBA077` | 入库单前置符 | `CBA077` | string |  |
+| `CBA078` | 出库单编码方式 | `CBA078` | string |  |
+| `CBA079` | 出库单前置符 | `CBA079` | string |  |
+| `CBA080` | 报废单编码方式 | `CBA080` | string |  |
+| `CBA081` | 报废单前置符 | `CBA081` | string |  |
+| `CBA082` | 产品入库单编码方式 | `CBA082` | string |  |
+| `CBA083` | 产品入库单前置符 | `CBA083` | string |  |
+| `CBA084` | 材料领用单编码方式 | `CBA084` | string |  |
+| `CBA085` | 材料领用单前置符 | `CBA085` | string |  |
+| `CBA086` | 预留字段 | `CBA086` | string |  |
+| `CBA087` | 预留字段 | `CBA087` | string |  |
+| `CBA088` | 到款核销单编码方式 | `CBA088` | string |  |
+| `CBA089` | 到款核销单前置符 | `CBA089` | string |  |
+| `CBA090` | 委托结算单编码方式 | `CBA090` | string |  |
+| `CBA091` | 委托结算单前置符 | `CBA091` | string |  |
+| `CBA092` | 启用报价管理 | `CBA092` | string |  |
+| `CBA093` | 商品统一利润率 | `CBA093` | float |  |
+| `CBA094` | 销售服务单编码方式 | `CBA094` | string |  |
+| `CBA095` | 销售服务单前置符 | `CBA095` | string |  |
+| `CBA096` | 维修服务单编码方式 | `CBA096` | string |  |
+| `CBA097` | 维修服务单前置符 | `CBA097` | string |  |
+| `CBA098` | 客户期初账款余额编码 | `CBA098` | string |  |
+| `CBA099` | 客户期初账款余额前置 | `CBA099` | string |  |
+| `CBA100` | 红字委托结算编码方式 | `CBA100` | string |  |
+| `CBA101` | 红字委托结算前置符 | `CBA101` | string |  |
+| `CBA102` | 委托代销开账编码方式 | `CBA102` | string |  |
+| `CBA103` | 委托代销开账前置符 | `CBA103` | string |  |
+| `CBA104` | 委托代销流程设置 | `CBA104` | string |  |
+| `CBA105` | 进货暂估处理方式 | `CBA105` | string |  |
+| `CBA106` | 冻结日期 | `CBA106` | string |  |
+| `CBA107` | 超收控制管理 | `CBA107` | string |  |
+| `CBA108` | 订单合同编码方式 | `CBA108` | string |  |
+| `CBA109` | 订单合同前置符 | `CBA109` | string |  |
+| `CBA110` | 超交控制 | `CBA110` | string |  |
+| `CBA111` | 寄售单编码方式 | `CBA111` | string |  |
+| `CBA112` | 寄售单前置符 | `CBA112` | string |  |
+| `CBA113` | 寄售退回单编码方式 | `CBA113` | string |  |
+| `CBA114` | 寄售退回单前置符 | `CBA114` | string |  |
+| `CBA115` | 报价单编码长度 | `CBA115` | integer |  |
+| `CBA116` | 订单合同编码长度 | `CBA116` | integer |  |
+| `CBA117` | 订单编码长度 | `CBA117` | integer |  |
+| `CBA118` | 销货单编码长度 | `CBA118` | integer |  |
+| `CBA119` | 销退单编码长度 | `CBA119` | integer |  |
+| `CBA120` | 客户期初账款编码长度 | `CBA120` | integer |  |
+| `CBA121` | 客户到款核销编码长度 | `CBA121` | integer |  |
+| `CBA122` | 委托代销开帐编码长度 | `CBA122` | integer |  |
+| `CBA123` | 委托结算单编码长度 | `CBA123` | integer |  |
+| `CBA124` | 红字委托结算编码长度 | `CBA124` | integer |  |
+| `CBA125` | 询价单编码长度 | `CBA125` | integer |  |
+| `CBA126` | 核价单编码长度 | `CBA126` | integer |  |
+| `CBA127` | 请购单编码长度 | `CBA127` | integer |  |
+| `CBA128` | 采购单编码长度 | `CBA128` | integer |  |
+| `CBA129` | 进货单编码长度 | `CBA129` | integer |  |
+| `CBA130` | 退货单编码长度 | `CBA130` | integer |  |
+| `CBA131` | 采购底稿编码长度 | `CBA131` | integer |  |
+| `CBA132` | 借出单编码长度 | `CBA132` | integer |  |
+| `CBA133` | 借出还入单编码长度 | `CBA133` | integer |  |
+| `CBA134` | 借入单编码长度 | `CBA134` | integer |  |
+| `CBA135` | 借入还出单编码长度 | `CBA135` | integer |  |
+| `CBA136` | 调拨单编码长度 | `CBA136` | integer |  |
+| `CBA137` | 盘点单编码长度 | `CBA137` | integer |  |
+| `CBA138` | 调整单编码长度 | `CBA138` | integer |  |
+| `CBA139` | 入库单编码长度 | `CBA139` | integer |  |
+| `CBA140` | 出库单编码长度 | `CBA140` | integer |  |
+| `CBA141` | 报废单编码长度 | `CBA141` | integer |  |
+| `CBA142` | 组合单编码长度 | `CBA142` | integer |  |
+| `CBA143` | 拆解单编码长度 | `CBA143` | integer |  |
+| `CBA144` | 销售服务记录编码长度 | `CBA144` | integer |  |
+| `CBA145` | 维修服务记录编码长度 | `CBA145` | integer |  |
+| `CBA901` | 录入者编号 | `entry_person_no` | string |  |
+| `CBA902` | 录入时间 | `entry_time` | string |  |
+| `CBA903` | 更改者编号 | `changer_no` | string |  |
+| `CBA904` | 更改时间 | `change_time` | string |  |
+| `CBA905` | 更新标记 | `update_flag` | integer |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "CBA001": ""
+  ,"CBA002": ""
+  ,"CBA003": ""
+  ,"CBA004": ""
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"CBA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"CBA001","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `CBA001` | `CBA001` | 序号 | 主键 |
+| `CBA002` | `CBA002` | 关帐年月 | |
+| `CBA003` | `CBA003` | 结账年月 | |
+| `CBA004` | `CBA004` | 成本计价方式 | |
+| `CBA005` | `CBA005` | 赠品管理 | |
+| `CBA006` | `CBA006` | 信用额度管理 | |
+| `CBA007` | `CBA007` | 按销货单记录客户商品 | |
+| `CBA008` | `CBA008` | 按进货单记录供应商商 | |
+| `CBA009` | `CBA009` | 进货检验管理 | |
+| `CBA010` | `CBA010` | 库存量不足管理 | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `CBA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `CBA001`

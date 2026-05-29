@@ -1,0 +1,44 @@
+# 示例配置文件
+# 复制到 ~/.yzcli/config.yaml 并根据实际情况修改
+
+erp:
+  # ERP服务地址
+  base_url: http://172.16.6.22:8103
+  # 用户认证令牌 (通过易助ERP的TPASC19作业获取)
+  user_token: ""
+  # 请求超时时间(秒)
+  timeout: 30
+
+# 字段命名模式:
+#   english_name - 使用英文节点名 (如 customer, docNo)
+#   field_number - 使用字段编号 (如 RCA001, RCA002)
+field_mode: english_name
+
+# 输出配置
+output:
+  # 默认输出格式: table / json / csv
+  format: table
+  # 默认分页大小
+  page_size: 20
+  # JSON输出是否格式化
+  pretty_print: true
+
+# 缓存配置
+cache:
+  # 是否启用TypeKey元数据缓存
+  enabled: true
+  # 缓存过期时间(秒)，默认24小时
+  ttl: 86400
+
+# 日志配置
+log:
+  # 是否启用日志
+  enabled: true
+  # 日志级别: DEBUG / INFO / WARNING / ERROR
+  level: INFO
+  # 日志目录，留空使用 ~/.yzcli/logs/
+  dir: ""
+  # 日志文件保留天数
+  max_days: 7
+  # 是否同时输出到控制台
+  console: false

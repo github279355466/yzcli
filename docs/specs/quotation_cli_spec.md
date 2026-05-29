@@ -1,0 +1,389 @@
+# CLI 规格说明书：报价单
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `quotation` |
+| **DLL** | `COPDC01` |
+| **服务名称** | `报价单` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "quotation" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "quotation" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"IAA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "quotation" \
+  --action "create" \
+  --data '{"IAA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "quotation" \
+  --action "approve" \
+  --data '{"datakeys":[{"IAA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `IAA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (DCSIAA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `IAA001` | 单号 | `docNo` | string | 主键 |
+| `IAA002` | 性质 | `nature` | string |  |
+| `IAA003` | 日期 | `date` | string |  |
+| `IAA004` | 客户性质 | `customer_nature` | string |  |
+| `IAA005` | 客户 | `customer` | string |  |
+| `IAA006` | 业务员 | `salesperson` | string |  |
+| `IAA007` | 部门 | `dept` | string |  |
+| `IAA008` | 币种 | `currency` | string |  |
+| `IAA009` | 汇率 | `exchange_rate` | float |  |
+| `IAA010` | 专案 | `project` | string |  |
+| `IAA011` | 有效日期 | `effective_date` | string |  |
+| `IAA012` | 备注 | `remarks` | string |  |
+| `IAA013` | 复核编号 | `review_no` | string |  |
+| `IAA014` | 复核姓名 | `review_name` | string |  |
+| `IAA015` | 发票种类 | `invoice_type` | string |  |
+| `IAA016` | 税率 | `tax_rate` | float |  |
+| `IAA017` | 无税金额 | `amt_excluding_tax` | float |  |
+| `IAA018` | 税额 | `tax_amt` | float |  |
+| `IAA019` | 本币无税金额 | `amt_in_local_currency_excluding_tax` | float |  |
+| `IAA020` | 本币税额 | `domestic_currency_tax_amt` | float |  |
+| `IAA021` | 审核码 | `approve_status` | string |  |
+| `IAA022` | 预留字段 | `reserved_field1` | string |  |
+| `IAA023` | 预留字段 | `reserved_field2` | string |  |
+| `IAA024` | 预留字段 | `reserved_field3` | string |  |
+| `IAA025` | 预留字段 | `reserved_field4` | string |  |
+| `IAA026` | 预留字段 | `reserved_field5` | string |  |
+| `IAA027` | 预留字段 | `reserved_field6` | float |  |
+| `IAA028` | 预留字段 | `reserved_field7` | float |  |
+| `IAA029` | 审核人 | `auditor` | string |  |
+| `IAA030` | 价税合计 | `sum_price_include_tax` | float |  |
+| `IAA031` | 本币价税合计 | `total_price_include_tax_in_local_currency` | float |  |
+| `IAA032` | 失效 | `invalidation` | string |  |
+| `IAA033` | 有效天数 | `valid_days` | integer |  |
+| `IAA800` | 测试 | `test` | string |  |
+| `IAA901` | 录入者编号 | `entry_person_no` | string |  |
+| `IAA902` | 录入时间 | `entry_time` | string |  |
+| `IAA903` | 更改者编号 | `changer_no` | string |  |
+| `IAA904` | 更改时间 | `change_time` | string |  |
+| `IAA905` | 更新标记 | `update_flag` | integer |  |
+| `IAA906` | 打印次数 | `print_count` | integer |  |
+| `IAA907` | 打印时间 | `print_time` | string |  |
+| `IAA908` | 打印人员 | `printer` | string |  |
+| `IAA909` | 打印人员姓名 | `printer_name` | string |  |
+| `IAA910` | 送审状态 | `submission_status` | string |  |
+| `IAA911` | 送审人 | `reviewer` | string |  |
+| `IAA912` | 审批人1 | `approver1` | string |  |
+| `IAA913` | 审批结果 | `approval_result1` | string |  |
+| `IAA914` | 审批意见 | `approval_opinion1` | string |  |
+| `IAA915` | 审批人2 | `approver2` | string |  |
+| `IAA916` | 审批结果 | `approval_result2` | string |  |
+| `IAA917` | 审批意见 | `approval_opinion2` | string |  |
+| `IAA918` | 审批人3 | `approver3` | string |  |
+| `IAA919` | 审批结果 | `approval_result3` | string |  |
+| `IAA920` | 审批意见 | `approval_opinion3` | string |  |
+| `IAA921` | 审批人4 | `approver4` | string |  |
+| `IAA922` | 审批结果 | `approval_result4` | string |  |
+| `IAA923` | 审批意见 | `approval_opinion4` | string |  |
+| `IAA924` | 审批人5 | `approver5` | string |  |
+| `IAA925` | 审批结果 | `approval_result5` | string |  |
+| `IAA926` | 审批意见 | `approval_opinion5` | string |  |
+| `IAA927` | 审批人6 | `approver6` | string |  |
+| `IAA928` | 审批结果 | `approval_result6` | string |  |
+| `IAA929` | 审批意见 | `approval_opinion6` | string |  |
+| `IAA930` | 终审人 | `final_approver` | string |  |
+| `IAA931` | 审批结果 | `approval_result7` | string |  |
+| `IAA932` | 审批意见 | `approval_opinion7` | string |  |
+| `IAA933` | 通知人1 | `notifier1` | string |  |
+| `IAA934` | 通知人2 | `notifier2` | string |  |
+| `IAA935` | 通知人3 | `notifier3` | string |  |
+| `IAA940` | 签核码 | `approval_code` | string |  |
+| `IAA941` | 工作流表单代号 | `workflow_form_code` | string |  |
+| `IAA942` | 工作流表单编号 | `workflow_form_no` | string |  |
+| `IAA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `IAA951` | 审批时间1 | `approval_time1` | string |  |
+| `IAA952` | 审批时间2 | `approval_time2` | string |  |
+| `IAA953` | 审批时间3 | `approval_time3` | string |  |
+| `IAA954` | 审批时间4 | `approval_time4` | string |  |
+| `IAA955` | 审批时间5 | `approval_time5` | string |  |
+| `IAA956` | 审批时间6 | `approval_time6` | string |  |
+| `IAA957` | 终审时间 | `final_review_time` | string |  |
+| `IAA959` | 审核时间 | `review_time` | string |  |
+| `IAA960` | 自定文字1 | `udf_text1` | string |  |
+| `IAA961` | 自定文字2 | `udf_text2` | string |  |
+| `IAA962` | 自定文字3 | `udf_text3` | string |  |
+| `IAA963` | 自定文字4 | `udf_text4` | string |  |
+| `IAA964` | 自定文字5 | `udf_text5` | string |  |
+| `IAA965` | 自定文字6 | `udf_text6` | string |  |
+| `IAA966` | 自定文字7 | `udf_text7` | string |  |
+| `IAA967` | 自定文字8 | `udf_text8` | string |  |
+| `IAA968` | 自定文字9 | `udf_text9` | string |  |
+| `IAA969` | 自定文字10 | `udf_text10` | string |  |
+| `IAA970` | 自定文字11 | `udf_text11` | string |  |
+| `IAA971` | 自定文字12 | `udf_text12` | string |  |
+| `IAA972` | 自定文字13 | `udf_text13` | string |  |
+| `IAA973` | 自定文字14 | `udf_text14` | string |  |
+| `IAA974` | 自定文字15 | `udf_text15` | string |  |
+| `IAA975` | 自定文字16 | `udf_text16` | string |  |
+| `IAA980` | 自定数字1 | `udf_no1` | float |  |
+| `IAA981` | 自定数字2 | `udf_no2` | float |  |
+| `IAA982` | 自定数字3 | `udf_no3` | float |  |
+| `IAA983` | 自定数字4 | `udf_no4` | float |  |
+| `IAA984` | 自定数字5 | `udf_no5` | float |  |
+| `IAA985` | 自定数字6 | `udf_no6` | float |  |
+| `IAA986` | 自定数字7 | `udf_no7` | float |  |
+| `IAA987` | 自定数字8 | `udf_no8` | float |  |
+| `IAA988` | 自定数字9 | `udf_no9` | float |  |
+| `IAA989` | 自定数字10 | `udf_no10` | float |  |
+| `IAA990` | 自定数字11 | `udf_no11` | float |  |
+| `IAA991` | 自定数字12 | `udf_no12` | float |  |
+| `IAA992` | 自定数字13 | `udf_no13` | float |  |
+| `IAA993` | 自定数字14 | `udf_no14` | float |  |
+| `IAA994` | 自定数字15 | `udf_no15` | float |  |
+| `IAA995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.2 单身表 (DCSIAB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `IAB001` | 单号 | `docNo` | string |  |
+| `IAB002` | 序号 | `seq` | string |  |
+| `IAB003` | 品号 | `item_no` | string |  |
+| `IAB004` | 品名 | `product_name` | string |  |
+| `IAB005` | 单位 | `unit` | string |  |
+| `IAB006` | 数量 | `qty` | float |  |
+| `IAB007` | 定价 | `pricing` | float |  |
+| `IAB008` | 折扣率 | `discount_rate` | float |  |
+| `IAB009` | 单价 | `unit_price` | float |  |
+| `IAB010` | 金额 | `amt` | string |  |
+| `IAB011` | 本币金额 | `local_currency_amt` | string |  |
+| `IAB012` | 赠品 | `gift` | string |  |
+| `IAB013` | 预留字段 | `reserved_field1` | float |  |
+| `IAB014` | 原币税额 | `org_currency_tax_amt` | string |  |
+| `IAB015` | 本币税额 | `domestic_currency_tax_amt` | string |  |
+| `IAB016` | 审核码 | `approve_status` | string |  |
+| `IAB017` | 预留字段 | `reserved_field2` | string |  |
+| `IAB018` | 预留字段 | `reserved_field3` | string |  |
+| `IAB019` | 预留字段 | `reserved_field4` | string |  |
+| `IAB020` | 预留字段 | `reserved_field5` | string |  |
+| `IAB021` | 预留字段 | `reserved_field6` | string |  |
+| `IAB022` | 预留字段 | `reserved_field7` | float |  |
+| `IAB023` | 预留字段 | `reserved_field8` | float |  |
+| `IAB024` | 含税单价 | `unit_price_including_tax` | float |  |
+| `IAB025` | 价税合计 | `sum_price_include_tax` | string |  |
+| `IAB026` | 本币价税合计 | `total_price_include_tax_in_local_currency` | string |  |
+| `IAB027` | 含税 | `include_tax` | string |  |
+| `IAB028` | 换算分子 | `conversion_numerator` | float |  |
+| `IAB029` | 换算分母 | `conversion_denominator` | float |  |
+| `IAB030` | 辅助单位 | `auxiliary_unit` | string |  |
+| `IAB031` | 辅助数量 | `auxiliary_qty` | float |  |
+| `IAB032` | 税率 | `tax_rate` | float |  |
+| `IAB033` | 规格 | `specification` | string |  |
+| `IAB034` | 失效日期 | `expiry_date` | string |  |
+| `IAB035` | 注销码 | `cancellation_code` | string |  |
+| `IAB901` | 录入者编号 | `entry_person_no` | string |  |
+| `IAB902` | 录入时间 | `entry_time` | string |  |
+| `IAB903` | 更改者编号 | `changer_no` | string |  |
+| `IAB904` | 更改时间 | `change_time` | string |  |
+| `IAB905` | 更新标记 | `update_flag` | integer |  |
+| `IAB960` | 自定文字1 | `udf_text1` | string |  |
+| `IAB961` | 自定文字2 | `udf_text2` | string |  |
+| `IAB962` | 自定文字3 | `udf_text3` | string |  |
+| `IAB963` | 自定文字4 | `udf_text4` | string |  |
+| `IAB964` | 自定文字5 | `udf_text5` | string |  |
+| `IAB965` | 自定文字6 | `udf_text6` | string |  |
+| `IAB966` | 自定文字7 | `udf_text7` | string |  |
+| `IAB967` | 自定文字8 | `udf_text8` | string |  |
+| `IAB968` | 自定文字9 | `udf_text9` | string |  |
+| `IAB969` | 自定文字10 | `udf_text10` | string |  |
+| `IAB970` | 自定文字11 | `udf_text11` | string |  |
+| `IAB971` | 自定文字12 | `udf_text12` | string |  |
+| `IAB972` | 自定文字13 | `udf_text13` | string |  |
+| `IAB973` | 自定文字14 | `udf_text14` | string |  |
+| `IAB974` | 自定文字15 | `udf_text15` | string |  |
+| `IAB975` | 自定文字16 | `udf_text16` | string |  |
+| `IAB980` | 自定数字1 | `udf_no1` | float |  |
+| `IAB981` | 自定数字2 | `udf_no2` | float |  |
+| `IAB982` | 自定数字3 | `udf_no3` | float |  |
+| `IAB983` | 自定数字4 | `udf_no4` | float |  |
+| `IAB984` | 自定数字5 | `udf_no5` | float |  |
+| `IAB985` | 自定数字6 | `udf_no6` | float |  |
+| `IAB986` | 自定数字7 | `udf_no7` | float |  |
+| `IAB987` | 自定数字8 | `udf_no8` | float |  |
+| `IAB988` | 自定数字9 | `udf_no9` | float |  |
+| `IAB989` | 自定数字10 | `udf_no10` | float |  |
+| `IAB990` | 自定数字11 | `udf_no11` | float |  |
+| `IAB991` | 自定数字12 | `udf_no12` | float |  |
+| `IAB992` | 自定数字13 | `udf_no13` | float |  |
+| `IAB993` | 自定数字14 | `udf_no14` | float |  |
+| `IAB994` | 自定数字15 | `udf_no15` | float |  |
+| `IAB995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.3 扩展表 (DCSIAC)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `IAC001` | 报价单单号 | `quotation_docNo` | string |  |
+| `IAC002` | 报价单序号 | `quotation_order_seq` | string |  |
+| `IAC003` | 层级码 | `hierarchy_code` | string |  |
+| `IAC004` | 品号 | `item_no` | string |  |
+| `IAC005` | 选择码 | `selection_code` | string |  |
+| `IAC006` | 数量 | `qty` | float |  |
+| `IAC007` | 选配原则 | `opt_selection_principle` | string |  |
+| `IAC008` | 主件品号 | `main_item_no` | string |  |
+| `IAC009` | 预留字段 | `reserved_field1` | string |  |
+| `IAC010` | 预留字段 | `reserved_field2` | string |  |
+| `IAC011` | 预留字段 | `reserved_field3` | string |  |
+| `IAC012` | 预留字段 | `reserved_field4` | string |  |
+| `IAC013` | 预留字段 | `reserved_field5` | float |  |
+| `IAC014` | 预留字段 | `reserved_field6` | float |  |
+| `IAC901` | 录入者编号 | `entry_person_no` | string |  |
+| `IAC902` | 录入时间 | `entry_time` | string |  |
+| `IAC903` | 更改者编号 | `changer_no` | string |  |
+| `IAC904` | 更改时间 | `change_time` | string |  |
+| `IAC905` | 更新标记 | `update_flag` | integer |  |
+| `IAC960` | 自定文字1 | `udf_text1` | string |  |
+| `IAC961` | 自定文字2 | `udf_text2` | string |  |
+| `IAC962` | 自定文字3 | `udf_text3` | string |  |
+| `IAC963` | 自定文字4 | `udf_text4` | string |  |
+| `IAC964` | 自定文字5 | `udf_text5` | string |  |
+| `IAC965` | 自定文字6 | `udf_text6` | string |  |
+| `IAC966` | 自定文字7 | `udf_text7` | string |  |
+| `IAC967` | 自定文字8 | `udf_text8` | string |  |
+| `IAC968` | 自定文字9 | `udf_text9` | string |  |
+| `IAC969` | 自定文字10 | `udf_text10` | string |  |
+| `IAC970` | 自定文字11 | `udf_text11` | string |  |
+| `IAC971` | 自定文字12 | `udf_text12` | string |  |
+| `IAC972` | 自定文字13 | `udf_text13` | string |  |
+| `IAC973` | 自定文字14 | `udf_text14` | string |  |
+| `IAC974` | 自定文字15 | `udf_text15` | string |  |
+| `IAC975` | 自定文字16 | `udf_text16` | string |  |
+| `IAC980` | 自定数字1 | `udf_no1` | float |  |
+| `IAC981` | 自定数字2 | `udf_no2` | float |  |
+| `IAC982` | 自定数字3 | `udf_no3` | float |  |
+| `IAC983` | 自定数字4 | `udf_no4` | float |  |
+| `IAC984` | 自定数字5 | `udf_no5` | float |  |
+| `IAC985` | 自定数字6 | `udf_no6` | float |  |
+| `IAC986` | 自定数字7 | `udf_no7` | float |  |
+| `IAC987` | 自定数字8 | `udf_no8` | float |  |
+| `IAC988` | 自定数字9 | `udf_no9` | float |  |
+| `IAC989` | 自定数字10 | `udf_no10` | float |  |
+| `IAC990` | 自定数字11 | `udf_no11` | float |  |
+| `IAC991` | 自定数字12 | `udf_no12` | float |  |
+| `IAC992` | 自定数字13 | `udf_no13` | float |  |
+| `IAC993` | 自定数字14 | `udf_no14` | float |  |
+| `IAC994` | 自定数字15 | `udf_no15` | float |  |
+| `IAC995` | 自定数字16 | `udf_no16` | float |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "IAA001": ""
+  ,"IAA002": ""
+  ,"IAA003": ""
+  ,"IAA004": ""
+  ,"cdsDetail": [{
+    "IAB001": ""
+    ,"IAB001": ""
+    ,"IAB002": ""
+    ,"IAB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"IAA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"docNo","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `IAA001` | `docNo` | 单号 | 主键 |
+| `IAA002` | `nature` | 性质 | |
+| `IAA003` | `date` | 日期 | |
+| `IAA004` | `customer_nature` | 客户性质 | |
+| `IAA005` | `customer` | 客户 | |
+| `IAA006` | `salesperson` | 业务员 | |
+| `IAA007` | `dept` | 部门 | |
+| `IAA008` | `currency` | 币种 | |
+| `IAA009` | `exchange_rate` | 汇率 | |
+| `IAA010` | `project` | 专案 | |
+| `IAB001` | `docNo` | 单号 (单身) | |
+| `IAB002` | `seq` | 序号 (单身) | |
+| `IAB003` | `item_no` | 品号 (单身) | |
+| `IAB004` | `product_name` | 品名 (单身) | |
+| `IAB005` | `unit` | 单位 (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `IAA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `IAA001`

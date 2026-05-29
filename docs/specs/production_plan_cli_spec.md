@@ -1,0 +1,358 @@
+# CLI 规格说明书：生产计划
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `production.plan` |
+| **DLL** | `SGMZC11` |
+| **服务名称** | `生产计划` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "production.plan" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "production.plan" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"SAA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "production.plan" \
+  --action "create" \
+  --data '{"SAA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "production.plan" \
+  --action "approve" \
+  --data '{"datakeys":[{"SAA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `SAA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (SGMSAA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `SAA001` | 单号 | `SAA001` | string | 主键 |
+| `SAA002` | 性质 | `SAA002` | string |  |
+| `SAA003` | 日期 | `SAA003` | string |  |
+| `SAA004` | 经办人 | `SAA004` | string |  |
+| `SAA005` | 部门 | `SAA005` | string |  |
+| `SAA006` | 备注 | `SAA006` | string |  |
+| `SAA007` | 预留字段 | `SAA007` | string |  |
+| `SAA008` | 预留字段 | `SAA008` | string |  |
+| `SAA009` | 预留字段 | `SAA009` | string |  |
+| `SAA010` | 预留字段 | `SAA010` | string |  |
+| `SAA011` | 预留字段 | `SAA011` | float |  |
+| `SAA012` | 预留字段 | `SAA012` | float |  |
+| `SAA013` | 审核码 | `SAA013` | string |  |
+| `SAA014` | 审核人 | `SAA014` | string |  |
+| `SAA901` | 录入者编号 | `entry_person_no` | string |  |
+| `SAA902` | 录入时间 | `entry_time` | string |  |
+| `SAA903` | 更改者编号 | `changer_no` | string |  |
+| `SAA904` | 更改时间 | `change_time` | string |  |
+| `SAA905` | 更新标记 | `update_flag` | integer |  |
+| `SAA960` | 自定文字1 | `udf_text1` | string |  |
+| `SAA961` | 自定文字2 | `udf_text2` | string |  |
+| `SAA962` | 自定文字3 | `udf_text3` | string |  |
+| `SAA963` | 自定文字4 | `udf_text4` | string |  |
+| `SAA964` | 自定文字5 | `udf_text5` | string |  |
+| `SAA965` | 自定文字6 | `udf_text6` | string |  |
+| `SAA980` | 自定数字1 | `udf_no1` | float |  |
+| `SAA981` | 自定数字2 | `udf_no2` | float |  |
+| `SAA982` | 自定数字3 | `udf_no3` | float |  |
+| `SAA983` | 自定数字4 | `udf_no4` | float |  |
+| `SAA984` | 自定数字5 | `udf_no5` | float |  |
+| `SAA985` | 自定数字6 | `udf_no6` | float |  |
+| `SAA910` | 送审状态 | `submission_status` | string |  |
+| `SAA911` | 送审人 | `reviewer` | string |  |
+| `SAA912` | 审批人1 | `approver1` | string |  |
+| `SAA913` | 审批结果 | `approval_result1` | string |  |
+| `SAA914` | 审批意见 | `approval_opinion1` | string |  |
+| `SAA915` | 审批人2 | `approver2` | string |  |
+| `SAA916` | 审批结果 | `approval_result2` | string |  |
+| `SAA917` | 审批意见 | `approval_opinion2` | string |  |
+| `SAA918` | 审批人3 | `approver3` | string |  |
+| `SAA919` | 审批结果 | `approval_result3` | string |  |
+| `SAA920` | 审批意见 | `approval_opinion3` | string |  |
+| `SAA921` | 审批人4 | `approver4` | string |  |
+| `SAA922` | 审批结果 | `approval_result4` | string |  |
+| `SAA923` | 审批意见 | `approval_opinion4` | string |  |
+| `SAA924` | 审批人5 | `approver5` | string |  |
+| `SAA925` | 审批结果 | `approval_result5` | string |  |
+| `SAA926` | 审批意见 | `approval_opinion5` | string |  |
+| `SAA927` | 审批人6 | `approver6` | string |  |
+| `SAA928` | 审批结果 | `approval_result6` | string |  |
+| `SAA929` | 审批意见 | `approval_opinion6` | string |  |
+| `SAA930` | 终审人 | `final_approver` | string |  |
+| `SAA931` | 审批结果 | `approval_result7` | string |  |
+| `SAA932` | 审批意见 | `approval_opinion7` | string |  |
+| `SAA933` | 通知人1 | `notifier1` | string |  |
+| `SAA934` | 通知人2 | `notifier2` | string |  |
+| `SAA935` | 通知人3 | `notifier3` | string |  |
+| `SAA966` | 自定文字7 | `udf_text7` | string |  |
+| `SAA967` | 自定文字8 | `udf_text8` | string |  |
+| `SAA968` | 自定文字9 | `udf_text9` | string |  |
+| `SAA969` | 自定文字10 | `udf_text10` | string |  |
+| `SAA970` | 自定文字11 | `udf_text11` | string |  |
+| `SAA971` | 自定文字12 | `udf_text12` | string |  |
+| `SAA972` | 自定文字13 | `udf_text13` | string |  |
+| `SAA973` | 自定文字14 | `udf_text14` | string |  |
+| `SAA974` | 自定文字15 | `udf_text15` | string |  |
+| `SAA975` | 自定文字16 | `udf_text16` | string |  |
+| `SAA986` | 自定数字7 | `udf_no7` | float |  |
+| `SAA987` | 自定数字8 | `udf_no8` | float |  |
+| `SAA988` | 自定数字9 | `udf_no9` | float |  |
+| `SAA989` | 自定数字10 | `udf_no10` | float |  |
+| `SAA990` | 自定数字11 | `udf_no11` | float |  |
+| `SAA991` | 自定数字12 | `udf_no12` | float |  |
+| `SAA992` | 自定数字13 | `udf_no13` | float |  |
+| `SAA993` | 自定数字14 | `udf_no14` | float |  |
+| `SAA994` | 自定数字15 | `udf_no15` | float |  |
+| `SAA995` | 自定数字16 | `udf_no16` | float |  |
+| `SAA906` | 打印次数 | `print_count` | integer |  |
+| `SAA907` | 打印时间 | `print_time` | string |  |
+| `SAA908` | 打印人员 | `printer` | string |  |
+| `SAA909` | 打印人员姓名 | `printer_name` | string |  |
+| `SAA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `SAA951` | 审批时间1 | `approval_time1` | string |  |
+| `SAA952` | 审批时间2 | `approval_time2` | string |  |
+| `SAA953` | 审批时间3 | `approval_time3` | string |  |
+| `SAA954` | 审批时间4 | `approval_time4` | string |  |
+| `SAA955` | 审批时间5 | `approval_time5` | string |  |
+| `SAA956` | 审批时间6 | `approval_time6` | string |  |
+| `SAA957` | 终审时间 | `final_review_time` | string |  |
+| `SAA959` | 审核时间 | `review_time` | string |  |
+
+### 3.2 单身表 (SGMSAB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `SAB001` | 单号 | `SAB001` | string |  |
+| `SAB002` | 序号 | `SAB002` | string |  |
+| `SAB003` | 主件品号 | `SAB003` | string |  |
+| `SAB004` | 品名 | `SAB004` | string |  |
+| `SAB005` | 规格 | `SAB005` | string |  |
+| `SAB006` | 单位 | `SAB006` | string |  |
+| `SAB007` | 计划数量 | `SAB007` | float |  |
+| `SAB008` | 工单数量 | `SAB008` | float |  |
+| `SAB009` | 预计开工日 | `SAB009` | string |  |
+| `SAB010` | 预计完工日 | `SAB010` | string |  |
+| `SAB011` | 状态码 | `SAB011` | string |  |
+| `SAB012` | 备注 | `SAB012` | string |  |
+| `SAB013` | 预留字段 | `SAB013` | string |  |
+| `SAB014` | 预留字段 | `SAB014` | string |  |
+| `SAB015` | 预留字段 | `SAB015` | string |  |
+| `SAB016` | 预留字段 | `SAB016` | string |  |
+| `SAB017` | 预留字段 | `SAB017` | float |  |
+| `SAB018` | 预留字段 | `SAB018` | float |  |
+| `SAB019` | 审核码 | `SAB019` | string |  |
+| `SAB020` | 来源 | `SAB020` | string |  |
+| `SAB021` | 来源单号 | `SAB021` | string |  |
+| `SAB022` | 来源序号 | `SAB022` | string |  |
+| `SAB023` | 指定结束原因 | `SAB023` | string |  |
+| `SAB901` | 录入者编号 | `entry_person_no` | string |  |
+| `SAB902` | 录入时间 | `entry_time` | string |  |
+| `SAB903` | 更改者编号 | `changer_no` | string |  |
+| `SAB904` | 更改时间 | `change_time` | string |  |
+| `SAB905` | 更新标记 | `update_flag` | integer |  |
+| `SAB960` | 自定文字1 | `udf_text1` | string |  |
+| `SAB961` | 自定文字2 | `udf_text2` | string |  |
+| `SAB962` | 自定文字3 | `udf_text3` | string |  |
+| `SAB963` | 自定文字4 | `udf_text4` | string |  |
+| `SAB964` | 自定文字5 | `udf_text5` | string |  |
+| `SAB965` | 自定文字6 | `udf_text6` | string |  |
+| `SAB980` | 自定数字1 | `udf_no1` | float |  |
+| `SAB981` | 自定数字2 | `udf_no2` | float |  |
+| `SAB982` | 自定数字3 | `udf_no3` | float |  |
+| `SAB983` | 自定数字4 | `udf_no4` | float |  |
+| `SAB984` | 自定数字5 | `udf_no5` | float |  |
+| `SAB985` | 自定数字6 | `udf_no6` | float |  |
+| `SAB966` | 自定文字7 | `udf_text7` | string |  |
+| `SAB967` | 自定文字8 | `udf_text8` | string |  |
+| `SAB968` | 自定文字9 | `udf_text9` | string |  |
+| `SAB969` | 自定文字10 | `udf_text10` | string |  |
+| `SAB970` | 自定文字11 | `udf_text11` | string |  |
+| `SAB971` | 自定文字12 | `udf_text12` | string |  |
+| `SAB972` | 自定文字13 | `udf_text13` | string |  |
+| `SAB973` | 自定文字14 | `udf_text14` | string |  |
+| `SAB974` | 自定文字15 | `udf_text15` | string |  |
+| `SAB975` | 自定文字16 | `udf_text16` | string |  |
+| `SAB986` | 自定数字7 | `udf_no7` | float |  |
+| `SAB987` | 自定数字8 | `udf_no8` | float |  |
+| `SAB988` | 自定数字9 | `udf_no9` | float |  |
+| `SAB989` | 自定数字10 | `udf_no10` | float |  |
+| `SAB990` | 自定数字11 | `udf_no11` | float |  |
+| `SAB991` | 自定数字12 | `udf_no12` | float |  |
+| `SAB992` | 自定数字13 | `udf_no13` | float |  |
+| `SAB993` | 自定数字14 | `udf_no14` | float |  |
+| `SAB994` | 自定数字15 | `udf_no15` | float |  |
+| `SAB995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.3 扩展表 (SGMSAC)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `SAC001` | 单号 | `SAC001` | string |  |
+| `SAC002` | 序号 | `SAC002` | string |  |
+| `SAC003` | 子单身序号 | `SAC003` | string |  |
+| `SAC004` | 子件品号 | `SAC004` | string |  |
+| `SAC005` | 品名 | `SAC005` | string |  |
+| `SAC006` | 规格 | `SAC006` | string |  |
+| `SAC007` | 单位 | `SAC007` | string |  |
+| `SAC008` | 仓库 | `SAC008` | string |  |
+| `SAC009` | 预计用量 | `SAC009` | float |  |
+| `SAC010` | 备注 | `SAC010` | string |  |
+| `SAC011` | 预留字段 | `SAC011` | string |  |
+| `SAC012` | 预留字段 | `SAC012` | string |  |
+| `SAC013` | 预留字段 | `SAC013` | string |  |
+| `SAC014` | 预留字段 | `SAC014` | string |  |
+| `SAC015` | 预留字段 | `SAC015` | float |  |
+| `SAC016` | 预留字段 | `SAC016` | float |  |
+| `SAC017` | 被选配子件 | `SAC017` | string |  |
+| `SAC018` | 位号 | `SAC018` | string |  |
+| `SAC901` | 录入者编号 | `entry_person_no` | string |  |
+| `SAC902` | 录入时间 | `entry_time` | string |  |
+| `SAC903` | 更改者编号 | `changer_no` | string |  |
+| `SAC904` | 更改时间 | `change_time` | string |  |
+| `SAC905` | 更新标记 | `update_flag` | integer |  |
+| `SAC960` | 自定文字1 | `udf_text1` | string |  |
+| `SAC961` | 自定文字2 | `udf_text2` | string |  |
+| `SAC962` | 自定文字3 | `udf_text3` | string |  |
+| `SAC963` | 自定文字4 | `udf_text4` | string |  |
+| `SAC964` | 自定文字5 | `udf_text5` | string |  |
+| `SAC965` | 自定文字6 | `udf_text6` | string |  |
+| `SAC980` | 自定数字1 | `udf_no1` | float |  |
+| `SAC981` | 自定数字2 | `udf_no2` | float |  |
+| `SAC982` | 自定数字3 | `udf_no3` | float |  |
+| `SAC983` | 自定数字4 | `udf_no4` | float |  |
+| `SAC984` | 自定数字5 | `udf_no5` | float |  |
+| `SAC985` | 自定数字6 | `udf_no6` | float |  |
+| `SAC966` | 自定文字7 | `udf_text7` | string |  |
+| `SAC967` | 自定文字8 | `udf_text8` | string |  |
+| `SAC968` | 自定文字9 | `udf_text9` | string |  |
+| `SAC969` | 自定文字10 | `udf_text10` | string |  |
+| `SAC970` | 自定文字11 | `udf_text11` | string |  |
+| `SAC971` | 自定文字12 | `udf_text12` | string |  |
+| `SAC972` | 自定文字13 | `udf_text13` | string |  |
+| `SAC973` | 自定文字14 | `udf_text14` | string |  |
+| `SAC974` | 自定文字15 | `udf_text15` | string |  |
+| `SAC975` | 自定文字16 | `udf_text16` | string |  |
+| `SAC986` | 自定数字7 | `udf_no7` | float |  |
+| `SAC987` | 自定数字8 | `udf_no8` | float |  |
+| `SAC988` | 自定数字9 | `udf_no9` | float |  |
+| `SAC989` | 自定数字10 | `udf_no10` | float |  |
+| `SAC990` | 自定数字11 | `udf_no11` | float |  |
+| `SAC991` | 自定数字12 | `udf_no12` | float |  |
+| `SAC992` | 自定数字13 | `udf_no13` | float |  |
+| `SAC993` | 自定数字14 | `udf_no14` | float |  |
+| `SAC994` | 自定数字15 | `udf_no15` | float |  |
+| `SAC995` | 自定数字16 | `udf_no16` | float |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "SAA001": ""
+  ,"SAA002": ""
+  ,"SAA003": ""
+  ,"SAA004": ""
+  ,"cdsDetail": [{
+    "SAB001": ""
+    ,"SAB001": ""
+    ,"SAB002": ""
+    ,"SAB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"SAA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"SAA001","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `SAA001` | `SAA001` | 单号 | 主键 |
+| `SAA002` | `SAA002` | 性质 | |
+| `SAA003` | `SAA003` | 日期 | |
+| `SAA004` | `SAA004` | 经办人 | |
+| `SAA005` | `SAA005` | 部门 | |
+| `SAA006` | `SAA006` | 备注 | |
+| `SAA007` | `SAA007` | 预留字段 | |
+| `SAA008` | `SAA008` | 预留字段 | |
+| `SAA009` | `SAA009` | 预留字段 | |
+| `SAA010` | `SAA010` | 预留字段 | |
+| `SAB001` | `SAB001` | 单号 (单身) | |
+| `SAB002` | `SAB002` | 序号 (单身) | |
+| `SAB003` | `SAB003` | 主件品号 (单身) | |
+| `SAB004` | `SAB004` | 品名 (单身) | |
+| `SAB005` | `SAB005` | 规格 (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `SAA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `SAA001`

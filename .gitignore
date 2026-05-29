@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Node.js
+node_modules/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config (contains secrets - use config.example.yaml as template)
+config.yaml
+src/yzcli/config.yaml
+
+# Build artifacts
+*.zip
+
+# OMC state
+.omc/
+
+# Logs
+*.log

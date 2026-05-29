@@ -1,0 +1,315 @@
+# CLI 规格说明书：询价单
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `inquiry` |
+| **DLL** | `PURCC01` |
+| **服务名称** | `询价单` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "inquiry" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "inquiry" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"HAA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "inquiry" \
+  --action "create" \
+  --data '{"HAA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "inquiry" \
+  --action "approve" \
+  --data '{"datakeys":[{"HAA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `HAA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (DCSHAA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `HAA001` | 单号 | `docNo` | string | 主键 |
+| `HAA002` | 性质 | `nature` | string |  |
+| `HAA003` | 日期 | `date` | string |  |
+| `HAA004` | 供应商 | `supplier` | string |  |
+| `HAA005` | 币种 | `currency` | string |  |
+| `HAA006` | 汇率 | `exchange_rate` | float |  |
+| `HAA007` | 询价人 | `inquiry_person` | string |  |
+| `HAA008` | 部门 | `dept` | string |  |
+| `HAA009` | 有效日期 | `effective_date` | string |  |
+| `HAA010` | 备注 | `remarks` | string |  |
+| `HAA011` | 审核码 | `approve_status` | string |  |
+| `HAA012` | 覆核编号 | `review_no` | string |  |
+| `HAA013` | 覆核姓名 | `review_name` | string |  |
+| `HAA014` | 金额 | `amt` | float |  |
+| `HAA015` | 本币金额 | `local_currency_amt` | float |  |
+| `HAA016` | 预留字段 | `reserved_field1` | string |  |
+| `HAA017` | 预留字段 | `reserved_field2` | string |  |
+| `HAA018` | 预留字段 | `reserved_field3` | string |  |
+| `HAA019` | 预留字段 | `reserved_field4` | string |  |
+| `HAA020` | 预留字段 | `reserved_field5` | float |  |
+| `HAA021` | 预留字段 | `reserved_field6` | float |  |
+| `HAA022` | 预留字段 | `reserved_field7` | string |  |
+| `HAA023` | 审核人 | `auditor` | string |  |
+| `HAA024` | 生效日期 | `effective_date2` | string |  |
+| `HAA901` | 录入者编号 | `entry_person_no` | string |  |
+| `HAA902` | 录入时间 | `entry_time` | string |  |
+| `HAA903` | 更改者编号 | `changer_no` | string |  |
+| `HAA904` | 更改时间 | `change_time` | string |  |
+| `HAA905` | 更新标记 | `update_flag` | integer |  |
+| `HAA906` | 打印次数 | `print_count` | integer |  |
+| `HAA907` | 打印时间 | `print_time` | string |  |
+| `HAA908` | 打印人员 | `printer` | string |  |
+| `HAA909` | 打印人员姓名 | `printer_name` | string |  |
+| `HAA910` | 送审状态 | `submission_status` | string |  |
+| `HAA911` | 送审人 | `reviewer` | string |  |
+| `HAA912` | 审批人1 | `approver1` | string |  |
+| `HAA913` | 审批结果 | `approval_result1` | string |  |
+| `HAA914` | 审批意见 | `approval_opinion1` | string |  |
+| `HAA915` | 审批人2 | `approver2` | string |  |
+| `HAA916` | 审批结果 | `approval_result2` | string |  |
+| `HAA917` | 审批意见 | `approval_opinion2` | string |  |
+| `HAA918` | 审批人3 | `approver3` | string |  |
+| `HAA919` | 审批结果 | `approval_result3` | string |  |
+| `HAA920` | 审批意见 | `approval_opinion3` | string |  |
+| `HAA921` | 审批人4 | `approver4` | string |  |
+| `HAA922` | 审批结果 | `approval_result4` | string |  |
+| `HAA923` | 审批意见 | `approval_opinion4` | string |  |
+| `HAA924` | 审批人5 | `approver5` | string |  |
+| `HAA925` | 审批结果 | `approval_result5` | string |  |
+| `HAA926` | 审批意见 | `approval_opinion5` | string |  |
+| `HAA927` | 审批人6 | `approver6` | string |  |
+| `HAA928` | 审批结果 | `approval_result6` | string |  |
+| `HAA929` | 审批意见 | `approval_opinion6` | string |  |
+| `HAA930` | 终审人 | `final_approver` | string |  |
+| `HAA931` | 审批结果 | `approval_result7` | string |  |
+| `HAA932` | 审批意见 | `approval_opinion7` | string |  |
+| `HAA933` | 通知人1 | `notifier1` | string |  |
+| `HAA934` | 通知人2 | `notifier2` | string |  |
+| `HAA935` | 通知人3 | `notifier3` | string |  |
+| `HAA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `HAA951` | 审批时间1 | `approval_time1` | string |  |
+| `HAA952` | 审批时间2 | `approval_time2` | string |  |
+| `HAA953` | 审批时间3 | `approval_time3` | string |  |
+| `HAA954` | 审批时间4 | `approval_time4` | string |  |
+| `HAA955` | 审批时间5 | `approval_time5` | string |  |
+| `HAA956` | 审批时间6 | `approval_time6` | string |  |
+| `HAA957` | 终审时间 | `final_review_time` | string |  |
+| `HAA959` | 审核时间 | `review_time` | string |  |
+| `HAA960` | 自定文字1 | `udf_text1` | string |  |
+| `HAA961` | 自定文字2 | `udf_text2` | string |  |
+| `HAA962` | 自定文字3 | `udf_text3` | string |  |
+| `HAA963` | 自定文字4 | `udf_text4` | string |  |
+| `HAA964` | 自定文字5 | `udf_text5` | string |  |
+| `HAA965` | 自定文字6 | `udf_text6` | string |  |
+| `HAA966` | 自定文字7 | `udf_text7` | string |  |
+| `HAA967` | 自定文字8 | `udf_text8` | string |  |
+| `HAA968` | 自定文字9 | `udf_text9` | string |  |
+| `HAA969` | 自定文字10 | `udf_text10` | string |  |
+| `HAA970` | 自定文字11 | `udf_text11` | string |  |
+| `HAA971` | 自定文字12 | `udf_text12` | string |  |
+| `HAA972` | 自定文字13 | `udf_text13` | string |  |
+| `HAA973` | 自定文字14 | `udf_text14` | string |  |
+| `HAA974` | 自定文字15 | `udf_text15` | string |  |
+| `HAA975` | 自定文字16 | `udf_text16` | string |  |
+| `HAA980` | 自定数字1 | `udf_no1` | float |  |
+| `HAA981` | 自定数字2 | `udf_no2` | float |  |
+| `HAA982` | 自定数字3 | `udf_no3` | float |  |
+| `HAA983` | 自定数字4 | `udf_no4` | float |  |
+| `HAA984` | 自定数字5 | `udf_no5` | float |  |
+| `HAA985` | 自定数字6 | `udf_no6` | float |  |
+| `HAA986` | 自定数字7 | `udf_no7` | float |  |
+| `HAA987` | 自定数字8 | `udf_no8` | float |  |
+| `HAA988` | 自定数字9 | `udf_no9` | float |  |
+| `HAA989` | 自定数字10 | `udf_no10` | float |  |
+| `HAA990` | 自定数字11 | `udf_no11` | float |  |
+| `HAA991` | 自定数字12 | `udf_no12` | float |  |
+| `HAA992` | 自定数字13 | `udf_no13` | float |  |
+| `HAA993` | 自定数字14 | `udf_no14` | float |  |
+| `HAA994` | 自定数字15 | `udf_no15` | float |  |
+| `HAA995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.2 单身表 (DCSHAB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `HAB001` | 单号 | `docNo` | string |  |
+| `HAB002` | 序号 | `seq` | string |  |
+| `HAB003` | 品号 | `item_no` | string |  |
+| `HAB004` | 品名 | `product_name` | string |  |
+| `HAB005` | 单位 | `unit` | string |  |
+| `HAB006` | 数量 | `qty` | float |  |
+| `HAB007` | 单价 | `unit_price` | float |  |
+| `HAB008` | 金额 | `amt` | string |  |
+| `HAB009` | 本币金额 | `local_currency_amt` | string |  |
+| `HAB010` | 审核码 | `approve_status` | string |  |
+| `HAB011` | 税率 | `tax_rate` | float |  |
+| `HAB012` | 原币税额 | `org_currency_tax_amt` | string |  |
+| `HAB013` | 本币税额 | `domestic_currency_tax_amt` | string |  |
+| `HAB014` | 预留字段 | `reserved_field1` | string |  |
+| `HAB015` | 预留字段 | `reserved_field2` | string |  |
+| `HAB016` | 预留字段 | `reserved_field3` | string |  |
+| `HAB017` | 预留字段 | `reserved_field4` | string |  |
+| `HAB018` | 预留字段 | `reserved_field5` | float |  |
+| `HAB019` | 预留字段 | `reserved_field6` | float |  |
+| `HAB020` | 预留字段 | `reserved_field7` | string |  |
+| `HAB021` | 换算分子 | `conversion_numerator` | float |  |
+| `HAB022` | 换算分母 | `conversion_denominator` | float |  |
+| `HAB023` | 辅助单位 | `auxiliary_unit` | string |  |
+| `HAB024` | 辅助数量 | `auxiliary_qty` | float |  |
+| `HAB025` | 规格 | `specification` | string |  |
+| `HAB026` | 含税 | `include_tax` | string |  |
+| `HAB027` | 含税单价 | `unit_price_including_tax` | float |  |
+| `HAB028` | 价税合计 | `sum_price_include_tax` | string |  |
+| `HAB029` | 本币价税合计 | `total_price_include_tax_in_local_currency` | string |  |
+| `HAB030` | 核定 | `approval` | string |  |
+| `HAB901` | 录入者编号 | `entry_person_no` | string |  |
+| `HAB902` | 录入时间 | `entry_time` | string |  |
+| `HAB903` | 更改者编号 | `changer_no` | string |  |
+| `HAB904` | 更改时间 | `change_time` | string |  |
+| `HAB905` | 更新标记 | `update_flag` | integer |  |
+| `HAB960` | 自定文字1 | `udf_text1` | string |  |
+| `HAB961` | 自定文字2 | `udf_text2` | string |  |
+| `HAB962` | 自定文字3 | `udf_text3` | string |  |
+| `HAB963` | 自定文字4 | `udf_text4` | string |  |
+| `HAB964` | 自定文字5 | `udf_text5` | string |  |
+| `HAB965` | 自定文字6 | `udf_text6` | string |  |
+| `HAB966` | 自定文字7 | `udf_text7` | string |  |
+| `HAB967` | 自定文字8 | `udf_text8` | string |  |
+| `HAB968` | 自定文字9 | `udf_text9` | string |  |
+| `HAB969` | 自定文字10 | `udf_text10` | string |  |
+| `HAB970` | 自定文字11 | `udf_text11` | string |  |
+| `HAB971` | 自定文字12 | `udf_text12` | string |  |
+| `HAB972` | 自定文字13 | `udf_text13` | string |  |
+| `HAB973` | 自定文字14 | `udf_text14` | string |  |
+| `HAB974` | 自定文字15 | `udf_text15` | string |  |
+| `HAB975` | 自定文字16 | `udf_text16` | string |  |
+| `HAB980` | 自定数字1 | `udf_no1` | float |  |
+| `HAB981` | 自定数字2 | `udf_no2` | float |  |
+| `HAB982` | 自定数字3 | `udf_no3` | float |  |
+| `HAB983` | 自定数字4 | `udf_no4` | float |  |
+| `HAB984` | 自定数字5 | `udf_no5` | float |  |
+| `HAB985` | 自定数字6 | `udf_no6` | float |  |
+| `HAB986` | 自定数字7 | `udf_no7` | float |  |
+| `HAB987` | 自定数字8 | `udf_no8` | float |  |
+| `HAB988` | 自定数字9 | `udf_no9` | float |  |
+| `HAB989` | 自定数字10 | `udf_no10` | float |  |
+| `HAB990` | 自定数字11 | `udf_no11` | float |  |
+| `HAB991` | 自定数字12 | `udf_no12` | float |  |
+| `HAB992` | 自定数字13 | `udf_no13` | float |  |
+| `HAB993` | 自定数字14 | `udf_no14` | float |  |
+| `HAB994` | 自定数字15 | `udf_no15` | float |  |
+| `HAB995` | 自定数字16 | `udf_no16` | float |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "HAA001": ""
+  ,"HAA002": ""
+  ,"HAA003": ""
+  ,"HAA004": ""
+  ,"cdsDetail": [{
+    "HAB001": ""
+    ,"HAB001": ""
+    ,"HAB002": ""
+    ,"HAB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"HAA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"docNo","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `HAA001` | `docNo` | 单号 | 主键 |
+| `HAA002` | `nature` | 性质 | |
+| `HAA003` | `date` | 日期 | |
+| `HAA004` | `supplier` | 供应商 | |
+| `HAA005` | `currency` | 币种 | |
+| `HAA006` | `exchange_rate` | 汇率 | |
+| `HAA007` | `inquiry_person` | 询价人 | |
+| `HAA008` | `dept` | 部门 | |
+| `HAA009` | `effective_date` | 有效日期 | |
+| `HAA010` | `remarks` | 备注 | |
+| `HAB001` | `docNo` | 单号 (单身) | |
+| `HAB002` | `seq` | 序号 (单身) | |
+| `HAB003` | `item_no` | 品号 (单身) | |
+| `HAB004` | `product_name` | 品名 (单身) | |
+| `HAB005` | `unit` | 单位 (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `HAA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `HAA001`

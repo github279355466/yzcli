@@ -1,0 +1,302 @@
+# CLI 规格说明书：报工单
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `work.report` |
+| **DLL** | `GYSYC05` |
+| **服务名称** | `报工单` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "work.report" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "work.report" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"RHA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "work.report" \
+  --action "create" \
+  --data '{"RHA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "work.report" \
+  --action "approve" \
+  --data '{"datakeys":[{"RHA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `RHA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (SGMRHA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RHA001` | 报工单号 | `RHA001` | string | 主键 |
+| `RHA002` | 单据日期 | `RHA002` | string |  |
+| `RHA003` | 性质 | `RHA003` | string |  |
+| `RHA004` | 经办人 | `RHA004` | string |  |
+| `RHA005` | 报工部门 | `RHA005` | string |  |
+| `RHA006` | 备注 | `RHA006` | string |  |
+| `RHA007` | 审核码 | `RHA007` | string |  |
+| `RHA008` | 审核人 | `RHA008` | string |  |
+| `RHA009` | 预留字段 | `RHA009` | string |  |
+| `RHA010` | 预留字段 | `RHA010` | string |  |
+| `RHA011` | 预留字段 | `RHA011` | string |  |
+| `RHA012` | 预留字段 | `RHA012` | string |  |
+| `RHA013` | 预留字段 | `RHA013` | float |  |
+| `RHA014` | 预留字段 | `RHA014` | float |  |
+| `RHA015` | log_id | `log_id` | string |  |
+| `RHA016` | req_id | `req_id` | string |  |
+| `RHA901` | 录入者编号 | `entry_person_no` | string |  |
+| `RHA902` | 录入时间 | `entry_time` | string |  |
+| `RHA903` | 更改者编号 | `changer_no` | string |  |
+| `RHA904` | 更改时间 | `change_time` | string |  |
+| `RHA905` | 更新标记 | `update_flag` | integer |  |
+| `RHA906` | 打印次数 | `print_count` | integer |  |
+| `RHA907` | 打印时间 | `print_time` | string |  |
+| `RHA908` | 打印人员 | `printer` | string |  |
+| `RHA909` | 打印人员姓名 | `printer_name` | string |  |
+| `RHA910` | 送审状态 | `submission_status` | string |  |
+| `RHA911` | 送审人 | `reviewer` | string |  |
+| `RHA912` | 审批人1 | `approver1` | string |  |
+| `RHA913` | 审批结果 | `approval_result1` | string |  |
+| `RHA914` | 审批意见 | `approval_opinion1` | string |  |
+| `RHA915` | 审批人2 | `approver2` | string |  |
+| `RHA916` | 审批结果 | `approval_result2` | string |  |
+| `RHA917` | 审批意见 | `approval_opinion2` | string |  |
+| `RHA918` | 审批人3 | `approver3` | string |  |
+| `RHA919` | 审批结果 | `approval_result3` | string |  |
+| `RHA920` | 审批意见 | `approval_opinion3` | string |  |
+| `RHA921` | 审批人4 | `approver4` | string |  |
+| `RHA922` | 审批结果 | `approval_result4` | string |  |
+| `RHA923` | 审批意见 | `approval_opinion4` | string |  |
+| `RHA924` | 审批人5 | `approver5` | string |  |
+| `RHA925` | 审批结果 | `approval_result5` | string |  |
+| `RHA926` | 审批意见 | `approval_opinion5` | string |  |
+| `RHA927` | 审批人6 | `approver6` | string |  |
+| `RHA928` | 审批结果 | `approval_result6` | string |  |
+| `RHA929` | 审批意见 | `approval_opinion6` | string |  |
+| `RHA930` | 终审人 | `final_approver` | string |  |
+| `RHA931` | 审批结果 | `approval_result7` | string |  |
+| `RHA932` | 审批意见 | `approval_opinion7` | string |  |
+| `RHA933` | 通知人1 | `notifier1` | string |  |
+| `RHA934` | 通知人2 | `notifier2` | string |  |
+| `RHA935` | 通知人3 | `notifier3` | string |  |
+| `RHA960` | 自定文字1 | `udf_text1` | string |  |
+| `RHA961` | 自定文字2 | `udf_text2` | string |  |
+| `RHA962` | 自定文字3 | `udf_text3` | string |  |
+| `RHA963` | 自定文字4 | `udf_text4` | string |  |
+| `RHA964` | 自定文字5 | `udf_text5` | string |  |
+| `RHA965` | 自定文字6 | `udf_text6` | string |  |
+| `RHA966` | 自定文字7 | `udf_text7` | string |  |
+| `RHA967` | 自定文字8 | `udf_text8` | string |  |
+| `RHA968` | 自定文字9 | `udf_text9` | string |  |
+| `RHA969` | 自定文字10 | `udf_text10` | string |  |
+| `RHA970` | 自定文字11 | `udf_text11` | string |  |
+| `RHA971` | 自定文字12 | `udf_text12` | string |  |
+| `RHA972` | 自定文字13 | `udf_text13` | string |  |
+| `RHA973` | 自定文字14 | `udf_text14` | string |  |
+| `RHA974` | 自定文字15 | `udf_text15` | string |  |
+| `RHA975` | 自定文字16 | `udf_text16` | string |  |
+| `RHA979` | 单头二维码 | `qr_code_on_doc_header` | string |  |
+| `RHA980` | 自定数字1 | `udf_no1` | float |  |
+| `RHA981` | 自定数字2 | `udf_no2` | float |  |
+| `RHA982` | 自定数字3 | `udf_no3` | float |  |
+| `RHA983` | 自定数字4 | `udf_no4` | float |  |
+| `RHA984` | 自定数字5 | `udf_no5` | float |  |
+| `RHA985` | 自定数字6 | `udf_no6` | float |  |
+| `RHA986` | 自定数字7 | `udf_no7` | float |  |
+| `RHA987` | 自定数字8 | `udf_no8` | float |  |
+| `RHA988` | 自定数字9 | `udf_no9` | float |  |
+| `RHA989` | 自定数字10 | `udf_no10` | float |  |
+| `RHA990` | 自定数字11 | `udf_no11` | float |  |
+| `RHA991` | 自定数字12 | `udf_no12` | float |  |
+| `RHA992` | 自定数字13 | `udf_no13` | float |  |
+| `RHA993` | 自定数字14 | `udf_no14` | float |  |
+| `RHA994` | 自定数字15 | `udf_no15` | float |  |
+| `RHA995` | 自定数字16 | `udf_no16` | float |  |
+| `RHA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `RHA951` | 审批时间1 | `approval_time1` | string |  |
+| `RHA952` | 审批时间2 | `approval_time2` | string |  |
+| `RHA953` | 审批时间3 | `approval_time3` | string |  |
+| `RHA954` | 审批时间4 | `approval_time4` | string |  |
+| `RHA955` | 审批时间5 | `approval_time5` | string |  |
+| `RHA956` | 审批时间6 | `approval_time6` | string |  |
+| `RHA957` | 终审时间 | `final_review_time` | string |  |
+| `RHA959` | 审核时间 | `review_time` | string |  |
+
+### 3.2 单身表 (SGMRHB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RHB001` | 报工单号 | `RHB001` | string |  |
+| `RHB002` | 序号 | `RHB002` | string |  |
+| `RHB003` | 员工编号 | `RHB003` | string |  |
+| `RHB004` | 工单单号 | `RHB004` | string |  |
+| `RHB005` | 工序 | `RHB005` | string |  |
+| `RHB006` | 工艺 | `RHB006` | string |  |
+| `RHB007` | 产品品号 | `RHB007` | string |  |
+| `RHB008` | 数量 | `RHB008` | float |  |
+| `RHB009` | 工时类型 | `RHB009` | string |  |
+| `RHB010` | 使用工时 | `RHB010` | string |  |
+| `RHB011` | 备注 | `RHB011` | string |  |
+| `RHB012` | 审核码 | `RHB012` | string |  |
+| `RHB013` | 预留字段 | `RHB013` | string |  |
+| `RHB014` | 预留字段 | `RHB014` | string |  |
+| `RHB015` | 预留字段 | `RHB015` | string |  |
+| `RHB016` | 预留字段 | `RHB016` | string |  |
+| `RHB017` | 预留字段 | `RHB017` | float |  |
+| `RHB018` | 预留字段 | `RHB018` | float |  |
+| `RHB019` | 扣款数量 | `RHB019` | float |  |
+| `RHB020` | 规格 | `RHB020` | string |  |
+| `RHB021` | 来源类别 | `RHB021` | string |  |
+| `RHB022` | 设备编号 | `RHB022` | string |  |
+| `RHB023` | 设备简称 | `RHB023` | string |  |
+| `RHB901` | 录入者编号 | `entry_person_no` | string |  |
+| `RHB902` | 录入时间 | `entry_time` | string |  |
+| `RHB903` | 更改者编号 | `changer_no` | string |  |
+| `RHB904` | 更改时间 | `change_time` | string |  |
+| `RHB905` | 更新标记 | `update_flag` | integer |  |
+| `RHB960` | 自定文字1 | `udf_text1` | string |  |
+| `RHB961` | 自定文字2 | `udf_text2` | string |  |
+| `RHB962` | 自定文字3 | `udf_text3` | string |  |
+| `RHB963` | 自定文字4 | `udf_text4` | string |  |
+| `RHB964` | 自定文字5 | `udf_text5` | string |  |
+| `RHB965` | 自定文字6 | `udf_text6` | string |  |
+| `RHB966` | 自定文字7 | `udf_text7` | string |  |
+| `RHB967` | 自定文字8 | `udf_text8` | string |  |
+| `RHB968` | 自定文字9 | `udf_text9` | string |  |
+| `RHB969` | 自定文字10 | `udf_text10` | string |  |
+| `RHB970` | 自定文字11 | `udf_text11` | string |  |
+| `RHB971` | 自定文字12 | `udf_text12` | string |  |
+| `RHB972` | 自定文字13 | `udf_text13` | string |  |
+| `RHB973` | 自定文字14 | `udf_text14` | string |  |
+| `RHB974` | 自定文字15 | `udf_text15` | string |  |
+| `RHB975` | 自定文字16 | `udf_text16` | string |  |
+| `RHB979` | 单身二维码 | `qr_code_on_doc_header` | string |  |
+| `RHB980` | 自定数字1 | `udf_no1` | float |  |
+| `RHB981` | 自定数字2 | `udf_no2` | float |  |
+| `RHB982` | 自定数字3 | `udf_no3` | float |  |
+| `RHB983` | 自定数字4 | `udf_no4` | float |  |
+| `RHB984` | 自定数字5 | `udf_no5` | float |  |
+| `RHB985` | 自定数字6 | `udf_no6` | float |  |
+| `RHB986` | 自定数字7 | `udf_no7` | float |  |
+| `RHB987` | 自定数字8 | `udf_no8` | float |  |
+| `RHB988` | 自定数字9 | `udf_no9` | float |  |
+| `RHB989` | 自定数字10 | `udf_no10` | float |  |
+| `RHB990` | 自定数字11 | `udf_no11` | float |  |
+| `RHB991` | 自定数字12 | `udf_no12` | float |  |
+| `RHB992` | 自定数字13 | `udf_no13` | float |  |
+| `RHB993` | 自定数字14 | `udf_no14` | float |  |
+| `RHB994` | 自定数字15 | `udf_no15` | float |  |
+| `RHB995` | 自定数字16 | `udf_no16` | float |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "RHA001": ""
+  ,"RHA002": ""
+  ,"RHA003": ""
+  ,"RHA004": ""
+  ,"cdsDetail": [{
+    "RHB001": ""
+    ,"RHB001": ""
+    ,"RHB002": ""
+    ,"RHB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"RHA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"RHA001","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `RHA001` | `RHA001` | 报工单号 | 主键 |
+| `RHA002` | `RHA002` | 单据日期 | |
+| `RHA003` | `RHA003` | 性质 | |
+| `RHA004` | `RHA004` | 经办人 | |
+| `RHA005` | `RHA005` | 报工部门 | |
+| `RHA006` | `RHA006` | 备注 | |
+| `RHA007` | `RHA007` | 审核码 | |
+| `RHA008` | `RHA008` | 审核人 | |
+| `RHA009` | `RHA009` | 预留字段 | |
+| `RHA010` | `RHA010` | 预留字段 | |
+| `RHB001` | `RHB001` | 报工单号 (单身) | |
+| `RHB002` | `RHB002` | 序号 (单身) | |
+| `RHB003` | `RHB003` | 员工编号 (单身) | |
+| `RHB004` | `RHB004` | 工单单号 (单身) | |
+| `RHB005` | `RHB005` | 工序 (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `RHA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `RHA001`

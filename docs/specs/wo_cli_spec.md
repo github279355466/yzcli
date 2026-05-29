@@ -1,0 +1,409 @@
+# CLI 规格说明书：工单
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `wo` |
+| **DLL** | `SGMZC01` |
+| **服务名称** | `工单` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "wo" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "wo" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"RAA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "wo" \
+  --action "create" \
+  --data '{"RAA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "wo" \
+  --action "approve" \
+  --data '{"datakeys":[{"RAA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `RAA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (SGMRAA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RAA001` | 工单单号 | `RAA001` | string | 主键 |
+| `RAA002` | 性质 | `RAA002` | string |  |
+| `RAA003` | 开单日期 | `RAA003` | string |  |
+| `RAA004` | 经办人 | `RAA004` | string |  |
+| `RAA005` | 部门 | `RAA005` | string |  |
+| `RAA006` | 预计开工日 | `RAA006` | string |  |
+| `RAA007` | 预计完工日 | `RAA007` | string |  |
+| `RAA008` | 实际开工日 | `RAA008` | string |  |
+| `RAA009` | 实际完工日 | `RAA009` | string |  |
+| `RAA010` | 前置来源 | `RAA010` | string |  |
+| `RAA011` | 前置单号 | `RAA011` | string |  |
+| `RAA012` | 前置序号 | `RAA012` | string |  |
+| `RAA013` | 源工单来源 | `RAA013` | string |  |
+| `RAA014` | 源工单 | `RAA014` | string |  |
+| `RAA015` | 主件品号 | `RAA015` | string |  |
+| `RAA016` | 预留字段 | `RAA016` | string |  |
+| `RAA017` | 预留字段 | `RAA017` | string |  |
+| `RAA018` | 生产数量 | `RAA018` | float |  |
+| `RAA019` | 已生产量 | `RAA019` | float |  |
+| `RAA020` | 完工码 | `RAA020` | string |  |
+| `RAA021` | 备注 | `RAA021` | string |  |
+| `RAA022` | 审核者编号 | `RAA022` | string |  |
+| `RAA023` | 审核者姓名 | `RAA023` | string |  |
+| `RAA024` | 审核码 | `RAA024` | string |  |
+| `RAA025` | 计划来源 | `RAA025` | string |  |
+| `RAA026` | 计划编号 | `RAA026` | string |  |
+| `RAA027` | 计划序号 | `RAA027` | string |  |
+| `RAA028` | 需求类别 | `RAA028` | string |  |
+| `RAA029` | 预留字段 | `RAA029` | string |  |
+| `RAA030` | 预留字段 | `RAA030` | string |  |
+| `RAA031` | 发放方式 | `RAA031` | string |  |
+| `RAA032` | 预留字段 | `RAA032` | string |  |
+| `RAA033` | 预留字段 | `RAA033` | string |  |
+| `RAA034` | 预留字段 | `RAA034` | string |  |
+| `RAA035` | 预留字段 | `RAA035` | float |  |
+| `RAA036` | 预留字段 | `RAA036` | float |  |
+| `RAA037` | 审核人 | `RAA037` | string |  |
+| `RAA038` | 主要材料 | `RAA038` | string |  |
+| `RAA039` | 报废数量 | `RAA039` | float |  |
+| `RAA040` | 规格 | `RAA040` | string |  |
+| `RAA041` | 已检数量 | `RAA041` | float |  |
+| `RAA042` | 不良品次数 | `RAA042` | float |  |
+| `RAA043` | 变更版本 | `RAA043` | string |  |
+| `RAA044` | 变更日期 | `RAA044` | string |  |
+| `RAA045` | 变更原因 | `RAA045` | string |  |
+| `RAA046` | 打印次数 | `RAA046` | integer |  |
+| `RAA047` | 打印人员 | `RAA047` | string |  |
+| `RAA048` | 打印时间 | `RAA048` | string |  |
+| `RAA049` | 指定完工原因 | `RAA049` | string |  |
+| `RAA901` | 录入者编号 | `entry_person_no` | string |  |
+| `RAA902` | 录入时间 | `entry_time` | string |  |
+| `RAA903` | 更改者编号 | `changer_no` | string |  |
+| `RAA904` | 更改时间 | `change_time` | string |  |
+| `RAA905` | 更新标记 | `update_flag` | integer |  |
+| `RAA906` | 打印次数 | `print_count` | integer |  |
+| `RAA907` | 打印时间 | `print_time` | string |  |
+| `RAA908` | 打印人员 | `printer` | string |  |
+| `RAA909` | 打印人员姓名 | `printer_name` | string |  |
+| `RAA910` | 送审状态 | `submission_status` | string |  |
+| `RAA911` | 送审人 | `reviewer` | string |  |
+| `RAA912` | 审批人1 | `approver1` | string |  |
+| `RAA913` | 审批结果 | `approval_result1` | string |  |
+| `RAA914` | 审批意见 | `approval_opinion1` | string |  |
+| `RAA915` | 审批人2 | `approver2` | string |  |
+| `RAA916` | 审批结果 | `approval_result2` | string |  |
+| `RAA917` | 审批意见 | `approval_opinion2` | string |  |
+| `RAA918` | 审批人3 | `approver3` | string |  |
+| `RAA919` | 审批结果 | `approval_result3` | string |  |
+| `RAA920` | 审批意见 | `approval_opinion3` | string |  |
+| `RAA921` | 审批人4 | `approver4` | string |  |
+| `RAA922` | 审批结果 | `approval_result4` | string |  |
+| `RAA923` | 审批意见 | `approval_opinion4` | string |  |
+| `RAA924` | 审批人5 | `approver5` | string |  |
+| `RAA925` | 审批结果 | `approval_result5` | string |  |
+| `RAA926` | 审批意见 | `approval_opinion5` | string |  |
+| `RAA927` | 审批人6 | `approver6` | string |  |
+| `RAA928` | 审批结果 | `approval_result6` | string |  |
+| `RAA929` | 审批意见 | `approval_opinion6` | string |  |
+| `RAA930` | 终审人 | `final_approver` | string |  |
+| `RAA931` | 审批结果 | `approval_result7` | string |  |
+| `RAA932` | 审批意见 | `approval_opinion7` | string |  |
+| `RAA933` | 通知人1 | `notifier1` | string |  |
+| `RAA934` | 通知人2 | `notifier2` | string |  |
+| `RAA935` | 通知人3 | `notifier3` | string |  |
+| `RAA960` | 自定文字1 | `udf_text1` | string |  |
+| `RAA961` | 自定文字2 | `udf_text2` | string |  |
+| `RAA962` | 自定文字3 | `udf_text3` | string |  |
+| `RAA963` | 自定文字4 | `udf_text4` | string |  |
+| `RAA964` | 自定文字5 | `udf_text5` | string |  |
+| `RAA965` | 自定文字6 | `udf_text6` | string |  |
+| `RAA966` | 自定文字7 | `udf_text7` | string |  |
+| `RAA967` | 自定文字8 | `udf_text8` | string |  |
+| `RAA968` | 自定文字9 | `udf_text9` | string |  |
+| `RAA969` | 自定文字10 | `udf_text10` | string |  |
+| `RAA970` | 自定文字11 | `udf_text11` | string |  |
+| `RAA971` | 自定文字12 | `udf_text12` | string |  |
+| `RAA972` | 自定文字13 | `udf_text13` | string |  |
+| `RAA973` | 自定文字14 | `udf_text14` | string |  |
+| `RAA974` | 自定文字15 | `udf_text15` | string |  |
+| `RAA975` | 自定文字16 | `udf_text16` | string |  |
+| `RAA979` | 单头二维码 | `qr_code_on_doc_header` | string |  |
+| `RAA980` | 自定数字1 | `udf_no1` | float |  |
+| `RAA981` | 自定数字2 | `udf_no2` | float |  |
+| `RAA982` | 自定数字3 | `udf_no3` | float |  |
+| `RAA983` | 自定数字4 | `udf_no4` | float |  |
+| `RAA984` | 自定数字5 | `udf_no5` | float |  |
+| `RAA985` | 自定数字6 | `udf_no6` | float |  |
+| `RAA986` | 自定数字7 | `udf_no7` | float |  |
+| `RAA987` | 自定数字8 | `udf_no8` | float |  |
+| `RAA988` | 自定数字9 | `udf_no9` | float |  |
+| `RAA989` | 自定数字10 | `udf_no10` | float |  |
+| `RAA990` | 自定数字11 | `udf_no11` | float |  |
+| `RAA991` | 自定数字12 | `udf_no12` | float |  |
+| `RAA992` | 自定数字13 | `udf_no13` | float |  |
+| `RAA993` | 自定数字14 | `udf_no14` | float |  |
+| `RAA994` | 自定数字15 | `udf_no15` | float |  |
+| `RAA995` | 自定数字16 | `udf_no16` | float |  |
+| `RAA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `RAA951` | 审批时间1 | `approval_time1` | string |  |
+| `RAA952` | 审批时间2 | `approval_time2` | string |  |
+| `RAA953` | 审批时间3 | `approval_time3` | string |  |
+| `RAA954` | 审批时间4 | `approval_time4` | string |  |
+| `RAA955` | 审批时间5 | `approval_time5` | string |  |
+| `RAA956` | 审批时间6 | `approval_time6` | string |  |
+| `RAA957` | 终审时间 | `final_review_time` | string |  |
+| `RAA959` | 审核时间 | `review_time` | string |  |
+
+### 3.2 单身表 (SGMRAB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RAB001` | 工单单号 | `RAB001` | string |  |
+| `RAB002` | 序号 | `RAB002` | string |  |
+| `RAB003` | 子件品号 | `RAB003` | string |  |
+| `RAB004` | 品名(预留) | `RAB004` | string |  |
+| `RAB005` | 单位(预留) | `RAB005` | string |  |
+| `RAB006` | 仓库 | `RAB006` | string |  |
+| `RAB007` | 预计用量 | `RAB007` | float |  |
+| `RAB008` | 已领料量 | `RAB008` | float |  |
+| `RAB009` | 入库耗用量 | `RAB009` | float |  |
+| `RAB010` | 结束 | `RAB010` | string |  |
+| `RAB011` | 备注 | `RAB011` | string |  |
+| `RAB012` | 审核码 | `RAB012` | string |  |
+| `RAB013` | 预留字段 | `RAB013` | string |  |
+| `RAB014` | 可替代 | `RAB014` | string |  |
+| `RAB015` | 预留字段 | `RAB015` | string |  |
+| `RAB016` | 预留字段 | `RAB016` | string |  |
+| `RAB017` | 预留字段 | `RAB017` | string |  |
+| `RAB018` | 预留字段 | `RAB018` | float |  |
+| `RAB019` | 预留字段 | `RAB019` | float |  |
+| `RAB020` | 规格 | `RAB020` | string |  |
+| `RAB021` | 被替代量 | `RAB021` | float |  |
+| `RAB022` | 位号 | `RAB022` | string |  |
+| `RAB901` | 录入者编号 | `entry_person_no` | string |  |
+| `RAB902` | 录入时间 | `entry_time` | string |  |
+| `RAB903` | 更改者编号 | `changer_no` | string |  |
+| `RAB904` | 更改时间 | `change_time` | string |  |
+| `RAB905` | 更新标记 | `update_flag` | integer |  |
+| `RAB960` | 自定文字1 | `udf_text1` | string |  |
+| `RAB961` | 自定文字2 | `udf_text2` | string |  |
+| `RAB962` | 自定文字3 | `udf_text3` | string |  |
+| `RAB963` | 自定文字4 | `udf_text4` | string |  |
+| `RAB964` | 自定文字5 | `udf_text5` | string |  |
+| `RAB965` | 自定文字6 | `udf_text6` | string |  |
+| `RAB966` | 自定文字7 | `udf_text7` | string |  |
+| `RAB967` | 自定文字8 | `udf_text8` | string |  |
+| `RAB968` | 自定文字9 | `udf_text9` | string |  |
+| `RAB969` | 自定文字10 | `udf_text10` | string |  |
+| `RAB970` | 自定文字11 | `udf_text11` | string |  |
+| `RAB971` | 自定文字12 | `udf_text12` | string |  |
+| `RAB972` | 自定文字13 | `udf_text13` | string |  |
+| `RAB973` | 自定文字14 | `udf_text14` | string |  |
+| `RAB974` | 自定文字15 | `udf_text15` | string |  |
+| `RAB975` | 自定文字16 | `udf_text16` | string |  |
+| `RAB979` | 单身二维码 | `qr_code_on_doc_header` | string |  |
+| `RAB980` | 自定数字1 | `udf_no1` | float |  |
+| `RAB981` | 自定数字2 | `udf_no2` | float |  |
+| `RAB982` | 自定数字3 | `udf_no3` | float |  |
+| `RAB983` | 自定数字4 | `udf_no4` | float |  |
+| `RAB984` | 自定数字5 | `udf_no5` | float |  |
+| `RAB985` | 自定数字6 | `udf_no6` | float |  |
+| `RAB986` | 自定数字7 | `udf_no7` | float |  |
+| `RAB987` | 自定数字8 | `udf_no8` | float |  |
+| `RAB988` | 自定数字9 | `udf_no9` | float |  |
+| `RAB989` | 自定数字10 | `udf_no10` | float |  |
+| `RAB990` | 自定数字11 | `udf_no11` | float |  |
+| `RAB991` | 自定数字12 | `udf_no12` | float |  |
+| `RAB992` | 自定数字13 | `udf_no13` | float |  |
+| `RAB993` | 自定数字14 | `udf_no14` | float |  |
+| `RAB994` | 自定数字15 | `udf_no15` | float |  |
+| `RAB995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.3 扩展表 (SGMRAC)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RAC001` | 工单单号 | `RAC001` | string |  |
+| `RAC002` | 工序 | `RAC002` | string |  |
+| `RAC028` | 来源类别 | `RAC028` | string |  |
+| `RAC003` | 工艺 | `RAC003` | string |  |
+| `RAC004` | 工艺说明 | `RAC004` | string |  |
+| `RAC005` | 工艺性质 | `RAC005` | string |  |
+| `RAC006` | 主生产者 | `RAC006` | string |  |
+| `RAC007` | 主生产者名称 | `RAC007` | string |  |
+| `RAC008` | 移入数量 | `RAC008` | float |  |
+| `RAC009` | 移出数量 | `RAC009` | float |  |
+| `RAC010` | 调整数量 | `RAC010` | float |  |
+| `RAC011` | 报工数量 | `RAC011` | float |  |
+| `RAC012` | 含税 | `RAC012` | string |  |
+| `RAC013` | 含税委外单价 | `RAC013` | float |  |
+| `RAC014` | 无税委外单价 | `RAC014` | float |  |
+| `RAC015` | 工时类型 | `RAC015` | string |  |
+| `RAC016` | 标准工时 | `RAC016` | string |  |
+| `RAC017` | 实际工时 | `RAC017` | string |  |
+| `RAC018` | 备注 | `RAC018` | string |  |
+| `RAC019` | 税率 | `RAC019` | float |  |
+| `RAC020` | 预留字段 | `RAC020` | string |  |
+| `RAC021` | 预留字段 | `RAC021` | string |  |
+| `RAC022` | 预留字段 | `RAC022` | string |  |
+| `RAC023` | 预留字段 | `RAC023` | string |  |
+| `RAC024` | 预留字段 | `RAC024` | float |  |
+| `RAC025` | 预留字段 | `RAC025` | float |  |
+| `RAC026` | 报废数量 | `RAC026` | float |  |
+| `RAC027` | 报废已扣款量 | `RAC027` | float |  |
+| `RAC029` | 显示序号 | `RAC029` | string |  |
+| `RAC901` | 录入者编号 | `entry_person_no` | string |  |
+| `RAC902` | 录入时间 | `entry_time` | string |  |
+| `RAC903` | 更改者编号 | `changer_no` | string |  |
+| `RAC904` | 更改时间 | `change_time` | string |  |
+| `RAC905` | 更新标记 | `update_flag` | integer |  |
+| `RAC960` | 自定文字1 | `udf_text1` | string |  |
+| `RAC961` | 自定文字2 | `udf_text2` | string |  |
+| `RAC962` | 自定文字3 | `udf_text3` | string |  |
+| `RAC963` | 自定文字4 | `udf_text4` | string |  |
+| `RAC964` | 自定文字5 | `udf_text5` | string |  |
+| `RAC965` | 自定文字6 | `udf_text6` | string |  |
+| `RAC980` | 自定数字1 | `udf_no1` | float |  |
+| `RAC981` | 自定数字2 | `udf_no2` | float |  |
+| `RAC982` | 自定数字3 | `udf_no3` | float |  |
+| `RAC983` | 自定数字4 | `udf_no4` | float |  |
+| `RAC984` | 自定数字5 | `udf_no5` | float |  |
+| `RAC985` | 自定数字6 | `udf_no6` | float |  |
+| `RAC966` | 自定文字7 | `udf_text7` | string |  |
+| `RAC967` | 自定文字8 | `udf_text8` | string |  |
+| `RAC968` | 自定文字9 | `udf_text9` | string |  |
+| `RAC969` | 自定文字10 | `udf_text10` | string |  |
+| `RAC970` | 自定文字11 | `udf_text11` | string |  |
+| `RAC971` | 自定文字12 | `udf_text12` | string |  |
+| `RAC972` | 自定文字13 | `udf_text13` | string |  |
+| `RAC973` | 自定文字14 | `udf_text14` | string |  |
+| `RAC974` | 自定文字15 | `udf_text15` | string |  |
+| `RAC975` | 自定文字16 | `udf_text16` | string |  |
+| `RAC986` | 自定数字7 | `udf_no7` | float |  |
+| `RAC987` | 自定数字8 | `udf_no8` | float |  |
+| `RAC988` | 自定数字9 | `udf_no9` | float |  |
+| `RAC989` | 自定数字10 | `udf_no10` | float |  |
+| `RAC990` | 自定数字11 | `udf_no11` | float |  |
+| `RAC991` | 自定数字12 | `udf_no12` | float |  |
+| `RAC992` | 自定数字13 | `udf_no13` | float |  |
+| `RAC993` | 自定数字14 | `udf_no14` | float |  |
+| `RAC994` | 自定数字15 | `udf_no15` | float |  |
+| `RAC995` | 自定数字16 | `udf_no16` | float |  |
+| `RAC906` | 打印次数 | `print_count` | integer |  |
+| `RAC907` | 打印时间 | `print_time` | string |  |
+| `RAC908` | 打印人员 | `printer` | string |  |
+| `RAC909` | 打印人员姓名 | `printer_name` | string |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "RAA001": ""
+  ,"RAA002": ""
+  ,"RAA003": ""
+  ,"RAA004": ""
+  ,"cdsDetail": [{
+    "RAB001": ""
+    ,"RAB001": ""
+    ,"RAB002": ""
+    ,"RAB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"RAA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"RAA001","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `RAA001` | `RAA001` | 工单单号 | 主键 |
+| `RAA002` | `RAA002` | 性质 | |
+| `RAA003` | `RAA003` | 开单日期 | |
+| `RAA004` | `RAA004` | 经办人 | |
+| `RAA005` | `RAA005` | 部门 | |
+| `RAA006` | `RAA006` | 预计开工日 | |
+| `RAA007` | `RAA007` | 预计完工日 | |
+| `RAA008` | `RAA008` | 实际开工日 | |
+| `RAA009` | `RAA009` | 实际完工日 | |
+| `RAA010` | `RAA010` | 前置来源 | |
+| `RAB001` | `RAB001` | 工单单号 (单身) | |
+| `RAB002` | `RAB002` | 序号 (单身) | |
+| `RAB003` | `RAB003` | 子件品号 (单身) | |
+| `RAB004` | `RAB004` | 品名(预留) (单身) | |
+| `RAB005` | `RAB005` | 单位(预留) (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `RAA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `RAA001`

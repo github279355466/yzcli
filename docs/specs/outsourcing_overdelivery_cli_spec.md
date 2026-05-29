@@ -1,0 +1,369 @@
+# CLI 规格说明书：委外超送单
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `outsourcing.overdelivery` |
+| **DLL** | `SGMZC22` |
+| **服务名称** | `委外超送单` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "outsourcing.overdelivery" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "outsourcing.overdelivery" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"RFA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "outsourcing.overdelivery" \
+  --action "create" \
+  --data '{"RFA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "outsourcing.overdelivery" \
+  --action "approve" \
+  --data '{"datakeys":[{"RFA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `RFA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (SGMRFA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RFA001` | 类别 | `RFA001` | string |  |
+| `RFA002` | 单号 | `RFA002` | string |  |
+| `RFA003` | 性质 | `RFA003` | string |  |
+| `RFA004` | 日期 | `RFA004` | string |  |
+| `RFA005` | 经办人 | `RFA005` | string |  |
+| `RFA006` | 委外单号 | `RFA006` | string |  |
+| `RFA007` | 预留字段 | `RFA007` | float |  |
+| `RFA008` | 预留字段 | `RFA008` | string |  |
+| `RFA009` | 供应商 | `RFA009` | string |  |
+| `RFA010` | 供应商邮地区号 | `RFA010` | string |  |
+| `RFA011` | 供应商地址 | `RFA011` | string |  |
+| `RFA012` | 备注 | `RFA012` | string |  |
+| `RFA013` | 付丝谒编号 | `RFA013` | string |  |
+| `RFA014` | 付丝谒姓名 | `RFA014` | string |  |
+| `RFA015` | 审核码 | `RFA015` | string |  |
+| `RFA016` | 日期 | `RFA016` | string |  |
+| `RFA017` | 部门 | `RFA017` | string |  |
+| `RFA018` | 预留字段 | `RFA018` | string |  |
+| `RFA019` | 预留字段 | `RFA019` | string |  |
+| `RFA020` | 预留字段 | `RFA020` | string |  |
+| `RFA021` | 预留字段 | `RFA021` | string |  |
+| `RFA022` | 预留字段 | `RFA022` | float |  |
+| `RFA023` | 预留字段 | `RFA023` | float |  |
+| `RFA024` | 审核人 | `RFA024` | string |  |
+| `RFA025` | 凭证抛转否 | `RFA025` | string |  |
+| `RFA026` | 凭证 | `RFA026` | string |  |
+| `RFA027` | 凭证类别 | `RFA027` | string |  |
+| `RFA028` | 审核时间 | `RFA028` | string |  |
+| `RFA901` | 录入者编号 | `entry_person_no` | string |  |
+| `RFA902` | 录入时间 | `entry_time` | string |  |
+| `RFA903` | 更改者编号 | `changer_no` | string |  |
+| `RFA904` | 更改时间 | `change_time` | string |  |
+| `RFA905` | 更新标记 | `update_flag` | integer |  |
+| `RFA906` | 打印次数 | `print_count` | integer |  |
+| `RFA907` | 打印时间 | `print_time` | string |  |
+| `RFA908` | 打印人员 | `printer` | string |  |
+| `RFA909` | 打印人员姓名 | `printer_name` | string |  |
+| `RFA910` | 送审状态 | `submission_status` | string |  |
+| `RFA911` | 送审人 | `reviewer` | string |  |
+| `RFA912` | 审批人1 | `approver1` | string |  |
+| `RFA913` | 审批结果 | `approval_result1` | string |  |
+| `RFA914` | 审批意见 | `approval_opinion1` | string |  |
+| `RFA915` | 审批人2 | `approver2` | string |  |
+| `RFA916` | 审批结果 | `approval_result2` | string |  |
+| `RFA917` | 审批意见 | `approval_opinion2` | string |  |
+| `RFA918` | 审批人3 | `approver3` | string |  |
+| `RFA919` | 审批结果 | `approval_result3` | string |  |
+| `RFA920` | 审批意见 | `approval_opinion3` | string |  |
+| `RFA921` | 审批人4 | `approver4` | string |  |
+| `RFA922` | 审批结果 | `approval_result4` | string |  |
+| `RFA923` | 审批意见 | `approval_opinion4` | string |  |
+| `RFA924` | 审批人5 | `approver5` | string |  |
+| `RFA925` | 审批结果 | `approval_result5` | string |  |
+| `RFA926` | 审批意见 | `approval_opinion5` | string |  |
+| `RFA927` | 审批人6 | `approver6` | string |  |
+| `RFA928` | 审批结果 | `approval_result6` | string |  |
+| `RFA929` | 审批意见 | `approval_opinion6` | string |  |
+| `RFA930` | 终审人 | `final_approver` | string |  |
+| `RFA931` | 审批结果 | `approval_result7` | string |  |
+| `RFA932` | 审批意见 | `approval_opinion7` | string |  |
+| `RFA933` | 通知人1 | `notifier1` | string |  |
+| `RFA934` | 通知人2 | `notifier2` | string |  |
+| `RFA935` | 通知人3 | `notifier3` | string |  |
+| `RFA940` | 签核码 | `approval_code` | string |  |
+| `RFA941` | 工作流表单代号 | `workflow_form_code` | string |  |
+| `RFA942` | 工作流表单编号 | `workflow_form_no` | string |  |
+| `RFA960` | 自定文字1 | `udf_text1` | string |  |
+| `RFA961` | 自定文字2 | `udf_text2` | string |  |
+| `RFA962` | 自定文字3 | `udf_text3` | string |  |
+| `RFA963` | 自定文字4 | `udf_text4` | string |  |
+| `RFA964` | 自定文字5 | `udf_text5` | string |  |
+| `RFA965` | 自定文字6 | `udf_text6` | string |  |
+| `RFA966` | 自定文字7 | `udf_text7` | string |  |
+| `RFA967` | 自定文字8 | `udf_text8` | string |  |
+| `RFA968` | 自定文字9 | `udf_text9` | string |  |
+| `RFA969` | 自定文字10 | `udf_text10` | string |  |
+| `RFA970` | 自定文字11 | `udf_text11` | string |  |
+| `RFA971` | 自定文字12 | `udf_text12` | string |  |
+| `RFA972` | 自定文字13 | `udf_text13` | string |  |
+| `RFA973` | 自定文字14 | `udf_text14` | string |  |
+| `RFA974` | 自定文字15 | `udf_text15` | string |  |
+| `RFA975` | 自定文字16 | `udf_text16` | string |  |
+| `RFA979` | 单头二维码 | `qr_code_on_doc_header` | string |  |
+| `RFA980` | 自定数字1 | `udf_no1` | float |  |
+| `RFA981` | 自定数字2 | `udf_no2` | float |  |
+| `RFA982` | 自定数字3 | `udf_no3` | float |  |
+| `RFA983` | 自定数字4 | `udf_no4` | float |  |
+| `RFA984` | 自定数字5 | `udf_no5` | float |  |
+| `RFA985` | 自定数字6 | `udf_no6` | float |  |
+| `RFA986` | 自定数字7 | `udf_no7` | float |  |
+| `RFA987` | 自定数字8 | `udf_no8` | float |  |
+| `RFA988` | 自定数字9 | `udf_no9` | float |  |
+| `RFA989` | 自定数字10 | `udf_no10` | float |  |
+| `RFA990` | 自定数字11 | `udf_no11` | float |  |
+| `RFA991` | 自定数字12 | `udf_no12` | float |  |
+| `RFA992` | 自定数字13 | `udf_no13` | float |  |
+| `RFA993` | 自定数字14 | `udf_no14` | float |  |
+| `RFA994` | 自定数字15 | `udf_no15` | float |  |
+| `RFA995` | 自定数字16 | `udf_no16` | float |  |
+| `RFA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `RFA951` | 审批时间1 | `approval_time1` | string |  |
+| `RFA952` | 审批时间2 | `approval_time2` | string |  |
+| `RFA953` | 审批时间3 | `approval_time3` | string |  |
+| `RFA954` | 审批时间4 | `approval_time4` | string |  |
+| `RFA955` | 审批时间5 | `approval_time5` | string |  |
+| `RFA956` | 审批时间6 | `approval_time6` | string |  |
+| `RFA957` | 终审时间 | `final_review_time` | string |  |
+| `RFA959` | 审核时间 | `review_time` | string |  |
+
+### 3.2 单身表 (SGMRFB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RFB001` | 类别 | `RFB001` | string |  |
+| `RFB002` | 单号 | `RFB002` | string |  |
+| `RFB003` | 序号 | `RFB003` | string |  |
+| `RFB004` | 子件品号 | `RFB004` | string |  |
+| `RFB005` | 品名(预留) | `RFB005` | string |  |
+| `RFB006` | 单位 | `RFB006` | string |  |
+| `RFB007` | 转出仓库 | `RFB007` | string |  |
+| `RFB008` | 转入仓库 | `RFB008` | string |  |
+| `RFB009` | 数量 | `RFB009` | float |  |
+| `RFB010` | 委外单号 | `RFB010` | string |  |
+| `RFB011` | 委外序号 | `RFB011` | string |  |
+| `RFB012` | 备注 | `RFB012` | string |  |
+| `RFB013` | 审核码 | `RFB013` | string |  |
+| `RFB014` | (预留)日期 | `RFB014` | string |  |
+| `RFB015` | 预留(可替代) | `RFB015` | string |  |
+| `RFB016` | 预留字段 | `RFB016` | string |  |
+| `RFB017` | 预留字段 | `RFB017` | string |  |
+| `RFB018` | 预留字段 | `RFB018` | string |  |
+| `RFB019` | 预留字段 | `RFB019` | float |  |
+| `RFB020` | 预留字段 | `RFB020` | float |  |
+| `RFB021` | 批号 | `RFB021` | string |  |
+| `RFB022` | 规格 | `RFB022` | string |  |
+| `RFB023` | 被替代序号 | `RFB023` | string |  |
+| `RFB024` | 换算分子 | `RFB024` | float |  |
+| `RFB025` | 换算分母 | `RFB025` | float |  |
+| `RFB026` | 库存单位 | `RFB026` | string |  |
+| `RFB027` | 库存数量 | `RFB027` | float |  |
+| `RFB901` | 录入者编号 | `entry_person_no` | string |  |
+| `RFB902` | 录入时间 | `entry_time` | string |  |
+| `RFB903` | 更改者编号 | `changer_no` | string |  |
+| `RFB904` | 更改时间 | `change_time` | string |  |
+| `RFB905` | 更新标记 | `update_flag` | integer |  |
+| `RFB960` | 自定文字1 | `udf_text1` | string |  |
+| `RFB961` | 自定文字2 | `udf_text2` | string |  |
+| `RFB962` | 自定文字3 | `udf_text3` | string |  |
+| `RFB963` | 自定文字4 | `udf_text4` | string |  |
+| `RFB964` | 自定文字5 | `udf_text5` | string |  |
+| `RFB965` | 自定文字6 | `udf_text6` | string |  |
+| `RFB966` | 自定文字7 | `udf_text7` | string |  |
+| `RFB967` | 自定文字8 | `udf_text8` | string |  |
+| `RFB968` | 自定文字9 | `udf_text9` | string |  |
+| `RFB969` | 自定文字10 | `udf_text10` | string |  |
+| `RFB970` | 自定文字11 | `udf_text11` | string |  |
+| `RFB971` | 自定文字12 | `udf_text12` | string |  |
+| `RFB972` | 自定文字13 | `udf_text13` | string |  |
+| `RFB973` | 自定文字14 | `udf_text14` | string |  |
+| `RFB974` | 自定文字15 | `udf_text15` | string |  |
+| `RFB975` | 自定文字16 | `udf_text16` | string |  |
+| `RFB979` | 单身二维码 | `qr_code_on_doc_header` | string |  |
+| `RFB980` | 自定数字1 | `udf_no1` | float |  |
+| `RFB981` | 自定数字2 | `udf_no2` | float |  |
+| `RFB982` | 自定数字3 | `udf_no3` | float |  |
+| `RFB983` | 自定数字4 | `udf_no4` | float |  |
+| `RFB984` | 自定数字5 | `udf_no5` | float |  |
+| `RFB985` | 自定数字6 | `udf_no6` | float |  |
+| `RFB986` | 自定数字7 | `udf_no7` | float |  |
+| `RFB987` | 自定数字8 | `udf_no8` | float |  |
+| `RFB988` | 自定数字9 | `udf_no9` | float |  |
+| `RFB989` | 自定数字10 | `udf_no10` | float |  |
+| `RFB990` | 自定数字11 | `udf_no11` | float |  |
+| `RFB991` | 自定数字12 | `udf_no12` | float |  |
+| `RFB992` | 自定数字13 | `udf_no13` | float |  |
+| `RFB993` | 自定数字14 | `udf_no14` | float |  |
+| `RFB994` | 自定数字15 | `udf_no15` | float |  |
+| `RFB995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.3 扩展表 (SGMRFC)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `RFC001` | 类别 | `RFC001` | string |  |
+| `RFC002` | 单号 | `RFC002` | string |  |
+| `RFC003` | 送料单序号 | `RFC003` | string |  |
+| `RFC006` | 序号 | `RFC006` | string |  |
+| `RFC004` | 批号 | `RFC004` | string |  |
+| `RFC005` | 拆分量 | `RFC005` | float |  |
+| `RFC901` | 录入者编号 | `entry_person_no` | string |  |
+| `RFC902` | 录入时间 | `entry_time` | string |  |
+| `RFC903` | 更改者编号 | `changer_no` | string |  |
+| `RFC904` | 更改时间 | `change_time` | string |  |
+| `RFC905` | 更新标记 | `update_flag` | integer |  |
+| `RFC960` | 自定文字1 | `udf_text1` | string |  |
+| `RFC961` | 自定文字2 | `udf_text2` | string |  |
+| `RFC962` | 自定文字3 | `udf_text3` | string |  |
+| `RFC963` | 自定文字4 | `udf_text4` | string |  |
+| `RFC964` | 自定文字5 | `udf_text5` | string |  |
+| `RFC965` | 自定文字6 | `udf_text6` | string |  |
+| `RFC980` | 自定数字1 | `udf_no1` | float |  |
+| `RFC981` | 自定数字2 | `udf_no2` | float |  |
+| `RFC982` | 自定数字3 | `udf_no3` | float |  |
+| `RFC983` | 自定数字4 | `udf_no4` | float |  |
+| `RFC984` | 自定数字5 | `udf_no5` | float |  |
+| `RFC985` | 自定数字6 | `udf_no6` | float |  |
+| `RFC966` | 自定文字7 | `udf_text7` | string |  |
+| `RFC967` | 自定文字8 | `udf_text8` | string |  |
+| `RFC968` | 自定文字9 | `udf_text9` | string |  |
+| `RFC969` | 自定文字10 | `udf_text10` | string |  |
+| `RFC970` | 自定文字11 | `udf_text11` | string |  |
+| `RFC971` | 自定文字12 | `udf_text12` | string |  |
+| `RFC972` | 自定文字13 | `udf_text13` | string |  |
+| `RFC973` | 自定文字14 | `udf_text14` | string |  |
+| `RFC974` | 自定文字15 | `udf_text15` | string |  |
+| `RFC975` | 自定文字16 | `udf_text16` | string |  |
+| `RFC986` | 自定数字7 | `udf_no7` | float |  |
+| `RFC987` | 自定数字8 | `udf_no8` | float |  |
+| `RFC988` | 自定数字9 | `udf_no9` | float |  |
+| `RFC989` | 自定数字10 | `udf_no10` | float |  |
+| `RFC990` | 自定数字11 | `udf_no11` | float |  |
+| `RFC991` | 自定数字12 | `udf_no12` | float |  |
+| `RFC992` | 自定数字13 | `udf_no13` | float |  |
+| `RFC993` | 自定数字14 | `udf_no14` | float |  |
+| `RFC994` | 自定数字15 | `udf_no15` | float |  |
+| `RFC995` | 自定数字16 | `udf_no16` | float |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "RFA001": ""
+  ,"RFA001": ""
+  ,"RFA002": ""
+  ,"RFA003": ""
+  ,"cdsDetail": [{
+    "RFB001": ""
+    ,"RFB001": ""
+    ,"RFB002": ""
+    ,"RFB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"RFA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"RFA001","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `RFA001` | `RFA001` | 类别 | |
+| `RFA002` | `RFA002` | 单号 | |
+| `RFA003` | `RFA003` | 性质 | |
+| `RFA004` | `RFA004` | 日期 | |
+| `RFA005` | `RFA005` | 经办人 | |
+| `RFA006` | `RFA006` | 委外单号 | |
+| `RFA007` | `RFA007` | 预留字段 | |
+| `RFA008` | `RFA008` | 预留字段 | |
+| `RFA009` | `RFA009` | 供应商 | |
+| `RFA010` | `RFA010` | 供应商邮地区号 | |
+| `RFB001` | `RFB001` | 类别 (单身) | |
+| `RFB002` | `RFB002` | 单号 (单身) | |
+| `RFB003` | `RFB003` | 序号 (单身) | |
+| `RFB004` | `RFB004` | 子件品号 (单身) | |
+| `RFB005` | `RFB005` | 品名(预留) (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `RFA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `RFA001`

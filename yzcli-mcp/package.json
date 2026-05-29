@@ -1,0 +1,32 @@
+{
+  "name": "yzcli-mcp",
+  "version": "0.1.0",
+  "description": "MCP Server for YZCLI ERP CLI - provides AI Agent tools for ERP operations",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "yzcli-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": ["mcp", "erp", "yzcli", "ai-agent"],
+  "author": "刘臣斌 <liucb@digiwin.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

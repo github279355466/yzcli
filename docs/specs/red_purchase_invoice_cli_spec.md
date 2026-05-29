@@ -1,0 +1,415 @@
+# CLI 规格说明书：红字采购发票
+
+## 1. 命令摘要
+
+| 属性 | 值 |
+| --- | --- |
+| **TypeKey** | `red.purchase.invoice` |
+| **DLL** | `YSFFC06` |
+| **服务名称** | `红字采购发票` |
+| **支持的操作** | `fastquery`, `getMultiple`, `create`, `update`, `delete`, `approve`, `disapprove` |
+| **业务类型** | 交易单据 |
+
+## 2. 命令语法
+
+### 查询列表（fastquery）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "red.purchase.invoice" \
+  --action "fastquery" \
+  --data '{"page_no":1,"page_size":10,"use_has_next":true}' \
+  --json
+```
+
+### 读取详情（getMultiple）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "red.purchase.invoice" \
+  --action "getMultiple" \
+  --data '{"datakeys":[{"GSA001":"?"}]}' \
+  --json
+```
+
+### 新增（create）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "red.purchase.invoice" \
+  --action "create" \
+  --data '{"GSA001":"",...}' \
+  --json
+```
+
+### 审核 / 撤审（approve / disapprove）
+
+```bash
+python3 scripts/erp_generic_adapter.py \
+  --type-key "red.purchase.invoice" \
+  --action "approve" \
+  --data '{"datakeys":[{"GSA001":"?"}]}' \
+  --json
+```
+
+
+## 3. 字段映射表
+
+> **写入操作（create/update）** 使用 `字段编号`（如 `GSA001`）
+
+> **读取响应（getMultiple）** 同时返回 `字段编号` 和 `节点名称`（可读别名）
+
+> **条件查询（fastquery）** 条件中的字段名使用 `节点名称`（可读别名）
+
+
+### 3.1 单头表 (YSFGSA)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `GSA001` | 发票号码 | `GSA001` | string | 主键 |
+| `GSA002` | 发票性质 | `GSA002` | string |  |
+| `GSA003` | 发票种类 | `GSA003` | string |  |
+| `GSA004` | 发票来源 | `GSA004` | string |  |
+| `GSA005` | 发票日期 | `GSA005` | string |  |
+| `GSA006` | 供应商 | `GSA006` | string |  |
+| `GSA007` | 部门 | `GSA007` | string |  |
+| `GSA008` | 经办人 | `GSA008` | string |  |
+| `GSA009` | 币种 | `GSA009` | string |  |
+| `GSA010` | 汇率 | `GSA010` | float |  |
+| `GSA011` | 税率 | `GSA011` | float |  |
+| `GSA012` | 专案 | `GSA012` | string |  |
+| `GSA013` | 预付款日 | `GSA013` | string |  |
+| `GSA014` | 备注 | `GSA014` | string |  |
+| `GSA015` | 凭证抛砖否 | `GSA015` | string |  |
+| `GSA016` | 凭证编号 | `GSA016` | string |  |
+| `GSA017` | 性质 | `GSA017` | string |  |
+| `GSA018` | 发票处理 | `GSA018` | string |  |
+| `GSA019` | 无税金额 | `GSA019` | float |  |
+| `GSA020` | 税额 | `GSA020` | float |  |
+| `GSA021` | 本币无税金额 | `GSA021` | float |  |
+| `GSA022` | 本币税额 | `GSA022` | float |  |
+| `GSA023` | 购买票据否 | `GSA023` | string |  |
+| `GSA024` | 现付 | `GSA024` | string |  |
+| `GSA025` | 现付金额 | `GSA025` | float |  |
+| `GSA026` | 结算方式 | `GSA026` | string |  |
+| `GSA027` | 票据号码 | `GSA027` | string |  |
+| `GSA028` | 付款单号 | `GSA028` | string |  |
+| `GSA029` | 制单人 | `GSA029` | string |  |
+| `GSA030` | 审核人 | `GSA030` | string |  |
+| `GSA031` | 预留 | `GSA031` | string |  |
+| `GSA032` | 审核码 | `GSA032` | string |  |
+| `GSA033` | 预留(复核编号) | `GSA033` | string |  |
+| `GSA034` | 预留(复核姓名) | `GSA034` | string |  |
+| `GSA035` | 红冲发票号码 | `GSA035` | string |  |
+| `GSA036` | 预留 | `GSA036` | string |  |
+| `GSA037` | 预留 | `GSA037` | string |  |
+| `GSA038` | 预留 | `GSA038` | string |  |
+| `GSA039` | 预留 | `GSA039` | float |  |
+| `GSA040` | 预留 | `GSA040` | float |  |
+| `GSA041` | 凭证类别 | `GSA041` | string |  |
+| `GSA042` | 核销方式 | `GSA042` | string |  |
+| `GSA043` | 暂估凭证抛转否 | `GSA043` | string |  |
+| `GSA044` | 暂估凭证编号 | `GSA044` | string |  |
+| `GSA045` | 暂估凭证类别 | `GSA045` | string |  |
+| `GSA046` | 分摊金额 | `GSA046` | float |  |
+| `GSA047` | 调整单号 | `GSA047` | string |  |
+| `GSA048` | 调整否 | `GSA048` | string |  |
+| `GSA901` | 录入者编号 | `entry_person_no` | string |  |
+| `GSA902` | 录入时间 | `entry_time` | string |  |
+| `GSA903` | 更改者编号 | `changer_no` | string |  |
+| `GSA904` | 更改时间 | `change_time` | string |  |
+| `GSA905` | 更新标记 | `update_flag` | integer |  |
+| `GSA960` | 自定文字1 | `udf_text1` | string |  |
+| `GSA961` | 自定文字2 | `udf_text2` | string |  |
+| `GSA962` | 自定文字3 | `udf_text3` | string |  |
+| `GSA963` | 自定文字4 | `udf_text4` | string |  |
+| `GSA964` | 自定文字5 | `udf_text5` | string |  |
+| `GSA965` | 自定文字6 | `udf_text6` | string |  |
+| `GSA980` | 自定数字1 | `udf_no1` | float |  |
+| `GSA981` | 自定数字2 | `udf_no2` | float |  |
+| `GSA982` | 自定数字3 | `udf_no3` | float |  |
+| `GSA983` | 自定数字4 | `udf_no4` | float |  |
+| `GSA984` | 自定数字5 | `udf_no5` | float |  |
+| `GSA985` | 自定数字6 | `udf_no6` | float |  |
+| `GSA910` | 送审状态 | `submission_status` | string |  |
+| `GSA911` | 送审人 | `reviewer` | string |  |
+| `GSA912` | 审批人1 | `approver1` | string |  |
+| `GSA913` | 审批结果 | `approval_result1` | string |  |
+| `GSA914` | 审批意见 | `approval_opinion1` | string |  |
+| `GSA915` | 审批人2 | `approver2` | string |  |
+| `GSA916` | 审批结果 | `approval_result2` | string |  |
+| `GSA917` | 审批意见 | `approval_opinion2` | string |  |
+| `GSA918` | 审批人3 | `approver3` | string |  |
+| `GSA919` | 审批结果 | `approval_result3` | string |  |
+| `GSA920` | 审批意见 | `approval_opinion3` | string |  |
+| `GSA921` | 审批人4 | `approver4` | string |  |
+| `GSA922` | 审批结果 | `approval_result4` | string |  |
+| `GSA923` | 审批意见 | `approval_opinion4` | string |  |
+| `GSA924` | 审批人5 | `approver5` | string |  |
+| `GSA925` | 审批结果 | `approval_result5` | string |  |
+| `GSA926` | 审批意见 | `approval_opinion5` | string |  |
+| `GSA927` | 审批人6 | `approver6` | string |  |
+| `GSA928` | 审批结果 | `approval_result6` | string |  |
+| `GSA929` | 审批意见 | `approval_opinion6` | string |  |
+| `GSA930` | 终审人 | `final_approver` | string |  |
+| `GSA931` | 审批结果 | `approval_result7` | string |  |
+| `GSA932` | 审批意见 | `approval_opinion7` | string |  |
+| `GSA933` | 通知人1 | `notifier1` | string |  |
+| `GSA934` | 通知人2 | `notifier2` | string |  |
+| `GSA935` | 通知人3 | `notifier3` | string |  |
+| `GSA966` | 自定文字7 | `udf_text7` | string |  |
+| `GSA967` | 自定文字8 | `udf_text8` | string |  |
+| `GSA968` | 自定文字9 | `udf_text9` | string |  |
+| `GSA969` | 自定文字10 | `udf_text10` | string |  |
+| `GSA970` | 自定文字11 | `udf_text11` | string |  |
+| `GSA971` | 自定文字12 | `udf_text12` | string |  |
+| `GSA972` | 自定文字13 | `udf_text13` | string |  |
+| `GSA973` | 自定文字14 | `udf_text14` | string |  |
+| `GSA974` | 自定文字15 | `udf_text15` | string |  |
+| `GSA975` | 自定文字16 | `udf_text16` | string |  |
+| `GSA986` | 自定数字7 | `udf_no7` | float |  |
+| `GSA987` | 自定数字8 | `udf_no8` | float |  |
+| `GSA988` | 自定数字9 | `udf_no9` | float |  |
+| `GSA989` | 自定数字10 | `udf_no10` | float |  |
+| `GSA990` | 自定数字11 | `udf_no11` | float |  |
+| `GSA991` | 自定数字12 | `udf_no12` | float |  |
+| `GSA992` | 自定数字13 | `udf_no13` | float |  |
+| `GSA993` | 自定数字14 | `udf_no14` | float |  |
+| `GSA994` | 自定数字15 | `udf_no15` | float |  |
+| `GSA995` | 自定数字16 | `udf_no16` | float |  |
+| `GSA906` | 打印次数 | `print_count` | integer |  |
+| `GSA907` | 打印时间 | `print_time` | string |  |
+| `GSA908` | 打印人员 | `printer` | string |  |
+| `GSA909` | 打印人员姓名 | `printer_name` | string |  |
+| `GSA950` | 送审时间 | `submission_time_for_review` | string |  |
+| `GSA951` | 审批时间1 | `approval_time1` | string |  |
+| `GSA952` | 审批时间2 | `approval_time2` | string |  |
+| `GSA953` | 审批时间3 | `approval_time3` | string |  |
+| `GSA954` | 审批时间4 | `approval_time4` | string |  |
+| `GSA955` | 审批时间5 | `approval_time5` | string |  |
+| `GSA956` | 审批时间6 | `approval_time6` | string |  |
+| `GSA957` | 终审时间 | `final_review_time` | string |  |
+| `GSA959` | 审核时间 | `review_time` | string |  |
+
+### 3.2 单身表 (YSFGSB)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `GSB001` | 发票号码 | `GSB001` | string |  |
+| `GSB002` | 序号 | `GSB002` | string |  |
+| `GSB003` | 来源 | `GSB003` | string |  |
+| `GSB004` | 来源单号 | `GSB004` | string |  |
+| `GSB005` | 来源序号 | `GSB005` | string |  |
+| `GSB006` | 品号 | `GSB006` | string |  |
+| `GSB007` | 品名 | `GSB007` | string |  |
+| `GSB008` | 单位 | `GSB008` | string |  |
+| `GSB009` | 仓库 | `GSB009` | string |  |
+| `GSB010` | 数量 | `GSB010` | float |  |
+| `GSB011` | 单价 | `GSB011` | float |  |
+| `GSB012` | 预留 | `GSB012` | float |  |
+| `GSB013` | 无税金额 | `GSB013` | string |  |
+| `GSB014` | 税额 | `GSB014` | string |  |
+| `GSB015` | 本币无税金额 | `GSB015` | string |  |
+| `GSB016` | 本币税额 | `GSB016` | string |  |
+| `GSB017` | 进货冲销金额 | `GSB017` | string |  |
+| `GSB018` | 审核码 | `GSB018` | string |  |
+| `GSB019` | 预留 | `GSB019` | string |  |
+| `GSB020` | 预留 | `GSB020` | string |  |
+| `GSB021` | 进货冲销价税合计 | `GSB021` | float |  |
+| `GSB022` | 预留 | `GSB022` | float |  |
+| `GSB023` | 含税单价 | `GSB023` | float |  |
+| `GSB024` | 价税合计 | `GSB024` | string |  |
+| `GSB025` | 本币价税合计 | `GSB025` | string |  |
+| `GSB026` | 单价类型 | `GSB026` | string |  |
+| `GSB027` | 本次开票原币未税金额 | `GSB027` | string |  |
+| `GSB028` | 本次开票本币未税金额 | `GSB028` | string |  |
+| `GSB029` | 原币价差 | `GSB029` | string |  |
+| `GSB030` | 本币价差 | `GSB030` | string |  |
+| `GSB031` | 已冲账数量 | `GSB031` | float |  |
+| `GSB032` | 已冲账金额 | `GSB032` | string |  |
+| `GSB033` | 本币已冲账金额 | `GSB033` | string |  |
+| `GSB034` | 税率 | `GSB034` | float |  |
+| `GSB035` | 规格 | `GSB035` | string |  |
+| `GSB036` | 前置单号 | `GSB036` | string |  |
+| `GSB037` | 前置来源 | `GSB037` | string |  |
+| `GSB038` | 前置序号 | `GSB038` | string |  |
+| `GSB039` | 分摊成本否 | `GSB039` | string |  |
+| `GSB901` | 录入者编号 | `entry_person_no` | string |  |
+| `GSB902` | 录入时间 | `entry_time` | string |  |
+| `GSB903` | 更改者编号 | `changer_no` | string |  |
+| `GSB904` | 更改时间 | `change_time` | string |  |
+| `GSB905` | 更新标记 | `update_flag` | integer |  |
+| `GSB960` | 自定文字1 | `udf_text1` | string |  |
+| `GSB961` | 自定文字2 | `udf_text2` | string |  |
+| `GSB962` | 自定文字3 | `udf_text3` | string |  |
+| `GSB963` | 自定文字4 | `udf_text4` | string |  |
+| `GSB964` | 自定文字5 | `udf_text5` | string |  |
+| `GSB965` | 自定文字6 | `udf_text6` | string |  |
+| `GSB980` | 自定数字1 | `udf_no1` | float |  |
+| `GSB981` | 自定数字2 | `udf_no2` | float |  |
+| `GSB982` | 自定数字3 | `udf_no3` | float |  |
+| `GSB983` | 自定数字4 | `udf_no4` | float |  |
+| `GSB984` | 自定数字5 | `udf_no5` | float |  |
+| `GSB985` | 自定数字6 | `udf_no6` | float |  |
+| `GSB966` | 自定文字7 | `udf_text7` | string |  |
+| `GSB967` | 自定文字8 | `udf_text8` | string |  |
+| `GSB968` | 自定文字9 | `udf_text9` | string |  |
+| `GSB969` | 自定文字10 | `udf_text10` | string |  |
+| `GSB970` | 自定文字11 | `udf_text11` | string |  |
+| `GSB971` | 自定文字12 | `udf_text12` | string |  |
+| `GSB972` | 自定文字13 | `udf_text13` | string |  |
+| `GSB973` | 自定文字14 | `udf_text14` | string |  |
+| `GSB974` | 自定文字15 | `udf_text15` | string |  |
+| `GSB975` | 自定文字16 | `udf_text16` | string |  |
+| `GSB986` | 自定数字7 | `udf_no7` | float |  |
+| `GSB987` | 自定数字8 | `udf_no8` | float |  |
+| `GSB988` | 自定数字9 | `udf_no9` | float |  |
+| `GSB989` | 自定数字10 | `udf_no10` | float |  |
+| `GSB990` | 自定数字11 | `udf_no11` | float |  |
+| `GSB991` | 自定数字12 | `udf_no12` | float |  |
+| `GSB992` | 自定数字13 | `udf_no13` | float |  |
+| `GSB993` | 自定数字14 | `udf_no14` | float |  |
+| `GSB994` | 自定数字15 | `udf_no15` | float |  |
+| `GSB995` | 自定数字16 | `udf_no16` | float |  |
+
+### 3.3 扩展表 (YSFGSC)
+
+| 字段编号 | 名称 | 节点名称(别名) | 类型 | 备注 |
+| --- | --- | --- | --- | --- |
+| `GSC001` | 发票号码 | `GSC001` | string |  |
+| `GSC002` | 序号 | `GSC002` | string |  |
+| `GSC003` | 来源 | `GSC003` | string |  |
+| `GSC004` | 来源单号 | `GSC004` | string |  |
+| `GSC005` | 来源序号 | `GSC005` | string |  |
+| `GSC006` | 品号(预留) | `GSC006` | string |  |
+| `GSC007` | 品名(预留) | `GSC007` | string |  |
+| `GSC008` | 单位(预留) | `GSC008` | string |  |
+| `GSC009` | 仓库(预留) | `GSC009` | string |  |
+| `GSC010` | 数量(预留) | `GSC010` | float |  |
+| `GSC011` | 单价(预留) | `GSC011` | float |  |
+| `GSC012` | 预留 | `GSC012` | float |  |
+| `GSC013` | 本次冲销金额 | `GSC013` | string |  |
+| `GSC014` | 原币税额(预留) | `GSC014` | string |  |
+| `GSC015` | 本币本次冲销金额 | `GSC015` | string |  |
+| `GSC016` | 本币税额(预留) | `GSC016` | string |  |
+| `GSC017` | 未冲销采购单发票 | `GSC017` | string |  |
+| `GSC018` | 审核码 | `GSC018` | string |  |
+| `GSC019` | 采购单号 | `GSC019` | string |  |
+| `GSC020` | 预留 | `GSC020` | string |  |
+| `GSC021` | 本次冲销价税合计 | `GSC021` | float |  |
+| `GSC022` | 本币本次冲销价税合计 | `GSC022` | float |  |
+| `GSC023` | 税率 | `GSC023` | float |  |
+| `GSC024` | 规格 | `GSC024` | string |  |
+| `GSC025` | 未冲销采购价税合计 | `GSC025` | string |  |
+| `GSC901` | 录入者编号 | `entry_person_no` | string |  |
+| `GSC902` | 录入时间 | `entry_time` | string |  |
+| `GSC903` | 更改者编号 | `changer_no` | string |  |
+| `GSC904` | 更改时间 | `change_time` | string |  |
+| `GSC905` | 更新标记 | `update_flag` | integer |  |
+| `GSC960` | 自定文字1 | `udf_text1` | string |  |
+| `GSC961` | 自定文字2 | `udf_text2` | string |  |
+| `GSC962` | 自定文字3 | `udf_text3` | string |  |
+| `GSC963` | 自定文字4 | `udf_text4` | string |  |
+| `GSC964` | 自定文字5 | `udf_text5` | string |  |
+| `GSC965` | 自定文字6 | `udf_text6` | string |  |
+| `GSC966` | 自定文字7 | `udf_text7` | string |  |
+| `GSC967` | 自定文字8 | `udf_text8` | string |  |
+| `GSC968` | 自定文字9 | `udf_text9` | string |  |
+| `GSC969` | 自定文字10 | `udf_text10` | string |  |
+| `GSC970` | 自定文字11 | `udf_text11` | string |  |
+| `GSC971` | 自定文字12 | `udf_text12` | string |  |
+| `GSC972` | 自定文字13 | `udf_text13` | string |  |
+| `GSC973` | 自定文字14 | `udf_text14` | string |  |
+| `GSC974` | 自定文字15 | `udf_text15` | string |  |
+| `GSC975` | 自定文字16 | `udf_text16` | string |  |
+| `GSC980` | 自定数字1 | `udf_no1` | float |  |
+| `GSC981` | 自定数字2 | `udf_no2` | float |  |
+| `GSC982` | 自定数字3 | `udf_no3` | float |  |
+| `GSC983` | 自定数字4 | `udf_no4` | float |  |
+| `GSC984` | 自定数字5 | `udf_no5` | float |  |
+| `GSC985` | 自定数字6 | `udf_no6` | float |  |
+| `GSC986` | 自定数字7 | `udf_no7` | float |  |
+| `GSC987` | 自定数字8 | `udf_no8` | float |  |
+| `GSC988` | 自定数字9 | `udf_no9` | float |  |
+| `GSC989` | 自定数字10 | `udf_no10` | float |  |
+| `GSC990` | 自定数字11 | `udf_no11` | float |  |
+| `GSC991` | 自定数字12 | `udf_no12` | float |  |
+| `GSC992` | 自定数字13 | `udf_no13` | float |  |
+| `GSC993` | 自定数字14 | `udf_no14` | float |  |
+| `GSC994` | 自定数字15 | `udf_no15` | float |  |
+| `GSC995` | 自定数字16 | `udf_no16` | float |  |
+
+## 4. 请求结构示例
+
+> **注意**：适配器会自动包装 `std_data.parameter` 层。`--data` 参数只传**内层业务数据**，无需包含 `std_data` 和 `parameter`。
+
+> 完整 API 报文 = `{"std_data": {"parameter": <--data内容> }}`
+
+### 4.1 创建/更新（--data 传入内容）
+
+```json
+{
+  "GSA001": ""
+  ,"GSA002": ""
+  ,"GSA003": ""
+  ,"GSA004": ""
+  ,"cdsDetail": [{
+    "GSB001": ""
+    ,"GSB001": ""
+    ,"GSB002": ""
+    ,"GSB003": ""
+  }]
+}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": {"cdsMaster": [<--data内容>]}}}`
+
+### 4.2 读取/审核/删除（--data 传入内容）
+
+```json
+{"datakeys": [{"GSA001": "?"}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+### 4.3 条件查询（--data 传入内容）
+
+```json
+{"page_no":1,"page_size":10,"use_has_next":true,"conditions":[{"fields":[{"field_name":"GSA001","value":"?","operator":"like"}]}]}
+```
+> 适配器自动包装为：`{"std_data": {"parameter": <--data内容>}}`
+
+
+## 5. 关键响应字段
+
+| 字段编号 | 节点名称(别名) | 名称 | 说明 |
+| --- | --- | --- | --- |
+| `GSA001` | `GSA001` | 发票号码 | 主键 |
+| `GSA002` | `GSA002` | 发票性质 | |
+| `GSA003` | `GSA003` | 发票种类 | |
+| `GSA004` | `GSA004` | 发票来源 | |
+| `GSA005` | `GSA005` | 发票日期 | |
+| `GSA006` | `GSA006` | 供应商 | |
+| `GSA007` | `GSA007` | 部门 | |
+| `GSA008` | `GSA008` | 经办人 | |
+| `GSA009` | `GSA009` | 币种 | |
+| `GSA010` | `GSA010` | 汇率 | |
+| `GSB001` | `GSB001` | 发票号码 (单身) | |
+| `GSB002` | `GSB002` | 序号 (单身) | |
+| `GSB003` | `GSB003` | 来源 (单身) | |
+| `GSB004` | `GSB004` | 来源单号 (单身) | |
+| `GSB005` | `GSB005` | 来源序号 (单身) | |
+
+## 6. 退出码 (Exit Codes)
+
+| 代码 | 含义 | 说明 |
+| --- | --- | --- |
+| 0 | 成功 | 操作成功完成 |
+| 2 | 验证错误 | 参数格式错误或缺少必填字段 |
+| 3 | 权限错误 | Token 无效或未设置 |
+| 7 | 事务失败 | ERP 业务逻辑错误 |
+
+## 7. 字段命名规则
+
+- **写入（create/update）**：使用 `字段编号` 列（如 `GSA001`）
+- **读取响应（getMultiple）**：同时返回 `字段编号` 和 `节点名称`
+- **条件查询（fastquery）**：条件中的字段名使用 `节点名称`（别名）
+- **审批/删除**：通过 `datakeys` 定位，使用主键 `GSA001`
