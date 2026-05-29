@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(yzcli *)",
+      "Bash(python -m yzcli *)",
+      "Bash(python -c *yzcli*)"
+    ],
+    "allow": [
+      "Bash(python -m pytest *)",
+      "Bash(ruff check *)",
+      "Bash(pip install *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npm install *)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(node dist/index.js --help)"
+    ]
+  }
+}

@@ -1,5 +1,12 @@
 # YZCLI 项目指南
 
+## 红线（Agent 必须遵守）
+
+1. **禁止直接执行 yzcli CLI 命令**：ERP 操作必须通过 MCP 工具（`yzcli_run` / `yzcli_help` / `yzcli_manifest` / `yzcli_validate`）。禁止执行 `yzcli query`、`yzcli create`、`python -m yzcli` 等命令。
+2. **禁止修改 yzcli 源码**：`src/yzcli/` 下的 `.py` 文件是核心代码，禁止直接修改。如需修改，必须经过人工审批。
+3. **禁止修改 yzcli-mcp 源码**：`yzcli-mcp/src/` 下的 `.ts` 文件禁止直接修改。
+4. **禁止修改 SKILL.md**：`yzcli-agent-skill/SKILL.md` 是部署文档，禁止 Agent 自行修改。
+
 ## 项目概览
 
 这是一个 Python CLI 项目，包名为 `yzcli`，入口命令为 `yzcli` / `python -m yzcli`。源码位于 `src/yzcli/`，配置示例为 `config.example.yaml`。
@@ -17,14 +24,16 @@
 
 ## AI Agent 接口
 
-`yzcli agent` 子命令提供结构化 JSON 接口，供外部 AI Agent 直接调用：
+> **唯一入口是 MCP 工具**，Agent 不应直接调用 yzcli CLI 命令。
 
-- `yzcli agent manifest --pretty`：获取工具 schema 和业务索引
-- `yzcli agent validate @request.json --pretty`：校验请求 JSON
-- `yzcli agent run @request.json --pretty --explain`：执行请求
-- `yzcli agent generate-map`：从离线文档重新生成内置 YAML 映射
+MCP 工具（通过 yzcli-mcp 调用，stdio 协议）：
+- `yzcli_run(request)`：执行 ERP 操作（fastquery / getMultiple / create / update / delete / approve / disapprove）
+- `yzcli_help(type_key)`：获取字段明细
+- `yzcli_manifest()`：获取业务索引
+- `yzcli_validate(request)`：校验请求 JSON
+- `yzcli_skill_version()`：查询 Skill 版本
 
-详细协议见 `docs/agent-cli-integration.md`。
+yzcli CLI 命令仅供开发者使用（测试、调试、配置），Agent 不应直接执行。
 
 ## MCP Server + Skill
 
