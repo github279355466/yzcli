@@ -1,0 +1,25 @@
+{
+  "name": "yzcli-cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "YZCLI ERP CLI — TypeScript rewrite using yzcli-sdk",
+  "main": "dist/index.js",
+  "bin": {
+    "yzcli": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "yzcli-sdk": "*",
+    "commander": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
+  }
+}
