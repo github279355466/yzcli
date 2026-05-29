@@ -46,12 +46,18 @@ def update_cmd(type_key: str, json_arg: str, dry_run: bool, **kwargs):
 
         if isinstance(data, list):
             cds_master = data
+        elif "cdsMaster" in data:
+            # 支持 { "cdsMaster": [...] } 包装格式
+            cds_master = data["cdsMaster"]
         else:
             cds_master = [data]
 
-        # 校验主键字段
+        # 校验主键字段（仅检查 master 层级的 PK，detail.* 由 ERP 内部校验）
         mapper = get_mapper(type_key)
-        pk_json_names = mapper.get_primary_keys_json_names()
+        pk_json_names = [
+            pk for pk in mapper.get_primary_keys_json_names()
+            if not pk.startswith("detail.")
+        ]
 
         for record in cds_master:
             missing_pks = [pk for pk in pk_json_names if pk not in record]
@@ -79,8 +85,18 @@ def update_cmd(type_key: str, json_arg: str, dry_run: bool, **kwargs):
         response = client.update(type_key=type_key, cds_master=cds_master)
 
         # 输出结果
-        if not response.success and response.code == '-1':
+        if not response.success:
             click.secho(f"执行失败: {response.message}", fg='red')
+
+            # 显示详细错误信息
+            result = response.data.get('result', {})
+            error_data = result.get('error', [])
+            if error_data:
+                for error in error_data:
+                    msg = error.get('message', str(error))
+                    click.secho(f"  - {msg}", fg='yellow')
+
+            restore_field_mode(original_mode)
             return
 
         result = response.data.get('result', {})

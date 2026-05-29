@@ -53,20 +53,24 @@ class OpenAPIClient:
 
         易助OpenAPI可能返回Content-Type为text/html但body是JSON，
         因此需要兼容处理，优先尝试JSON解析。
+        强制使用 UTF-8 解码避免 Windows GBK 乱码。
         """
         raw_data = None
-        # 优先尝试response.json()（依赖Content-Type）
-        try:
-            raw_data = response.json()
-        except (json.JSONDecodeError, requests.exceptions.JSONDecodeError):
-            pass
 
-        # 如果json()失败，手动尝试从text解析（兼容text/html响应头）
-        if raw_data is None:
-            try:
-                raw_data = json.loads(response.text)
-            except (json.JSONDecodeError, ValueError):
-                raise APIClientError(f"响应不是有效的JSON: {response.text[:200]}")
+        # 强制 UTF-8 解码，避免 GBK/其他编码导致 JSON 解析失败
+        try:
+            text = response.content.decode("utf-8")
+        except (UnicodeDecodeError, ValueError):
+            text = response.text
+
+        # 去除 BOM 和不可见控制字符
+        text = text.lstrip("﻿")
+        text = "".join(ch for ch in text if ch >= " " or ch in "\n\r\t")
+
+        try:
+            raw_data = json.loads(text, strict=False)
+        except (json.JSONDecodeError, ValueError) as e:
+            raise APIClientError(f"响应不是有效的JSON: {text[:300]} (原始错误: {e})")
 
         std_data = raw_data.get('std_data', {})
         execution = std_data.get('execution', {})

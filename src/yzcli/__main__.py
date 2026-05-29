@@ -4,8 +4,13 @@
 类似 cli-anything 的通用架构，支持所有 TypeKey 的通用操作
 """
 
-import click
 import sys
+# Windows 控制台默认 GBK，强制 stdout/stderr 为 UTF-8 避免乱码
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+import click
 
 from . import __version__
 from .commands import (
